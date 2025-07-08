@@ -1,5 +1,5 @@
 
-package model.Category;
+package model.DTO;
 
 public class CategoryDTO {
     private int categoryId;

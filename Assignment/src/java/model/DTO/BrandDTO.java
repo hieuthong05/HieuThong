@@ -1,5 +1,5 @@
 
-package model.Brand;
+package model.DTO;
 
 public class BrandDTO {
     private int brandId;
