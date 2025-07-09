@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.DAO.UserDAO;
 import model.DTO.UserDTO;
+import utils.AuthUtils;
 
 /**
  *
@@ -119,8 +120,14 @@ public class UserController extends HttpServlet {
        return url;
     }
 
-    private String handleLogout(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private String handleLogout(HttpServletRequest request, HttpServletResponse response)
+    {
+        HttpSession session = request.getSession();
+        if (AuthUtils.isLoggedIn(request))
+        {   
+            session.invalidate();
+        }
+        return HOME_PAGE;
     }
 
 }

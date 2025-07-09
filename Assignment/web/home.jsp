@@ -92,13 +92,13 @@
             if (AuthUtils.isLoggedIn(request))
             {
         %>
-                <form method="post" action="MainController">
+               <form method="post" action="MainController">
                 <div class="dropdown">
                   <button class="dropbtn"><%=user.getName()%></button>
                   <div class="dropdown-content">
                     <button type="submit" >Delete Account</button>
                     <button type="submit" >Update Profile</button>
-                    <button type="submit" >Logout</button>
+                    <button type="submit" name="action" value="logout" >Logout</button>
                   </div>
                 </div>
               </form>
