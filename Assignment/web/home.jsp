@@ -161,6 +161,7 @@
         <% } else {
             UserDTO user = AuthUtils.getCurrentUser(request);
         %>
+<<<<<<< HEAD
             <span class="welcome">Xin chào, <%= user.getName() %></span>
             <form action="MainController" method="post" style="display:inline;">
                 <input type="hidden" name="action" value="Logout">
@@ -169,6 +170,24 @@
         <% } %>
     </nav>
 </header>
+=======
+               <form method="post" action="MainController">
+                <div class="dropdown">
+                  <button class="dropbtn"><%=user.getName()%></button>
+                  <div class="dropdown-content">
+                    <button type="submit" >Delete Account</button>
+                    <button type="submit" >Update Profile</button>
+                    <button type="submit" name="action" value="logout" >Logout</button>
+                  </div>
+                </div>
+              </form>
+                  
+            <div>
+                <form>
+                    <input type="submit" value="My Order"/>
+                </form>
+            </div>
+>>>>>>> f0947c0c6aeb10140ea06fe91e992d3497d6e8ff
 
 <!-- Search bar -->
 <div class="search-bar">
