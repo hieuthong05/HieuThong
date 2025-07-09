@@ -19,9 +19,10 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS Home Page -->    
-    <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/body.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/body.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
+
 
 </head>
 <body>
