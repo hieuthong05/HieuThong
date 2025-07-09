@@ -15,191 +15,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>FPT Shop - Trang chủ</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f8f8;
-        }
+    <title>FPT Shop - Trang chủ</title>   
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS Home Page -->    
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/body.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
 
-        header {
-            background-color: #2d2d2d;
-            padding: 10px 20px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h2 {
-            margin: 0;
-            font-size: 24px;
-            color: #f33;
-        }
-
-        nav a, nav form {
-            margin-left: 15px;
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-block;
-        }
-
-        nav form {
-            display: inline;
-        }
-
-        nav input[type="submit"] {
-            background: #f33;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropbtn {
-            background-color: #f33;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            border-radius: 4px;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content button {
-            color: black;
-            padding: 10px 12px;
-            text-decoration: none;
-            display: block;
-            background: none;
-            border: none;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        .dropdown-content button:hover {
-            background-color: #f1f1f1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .search-bar {
-            background-color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .search-bar input[type="text"] {
-            width: 350px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px 0 0 4px;
-        }
-
-        .search-bar input[type="submit"] {
-            padding: 9px 15px;
-            border: none;
-            background-color: #f33;
-            color: white;
-            border-radius: 0 4px 4px 0;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .category-bar {
-            background-color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: center;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .category-bar form {
-            margin: 0 5px;
-        }
-
-        .category-bar input[type="submit"] {
-            background-color: #eee;
-            border: 1px solid #ccc;
-            padding: 6px 14px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .container {
-            padding: 20px;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 20px;
-        }
-
-        .product-card {
-            background-color: white;
-            border: 1px solid #ddd;
-            padding: 15px;
-            text-align: center;
-            border-radius: 6px;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .product-card:hover {
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        .product-card h3 {
-            font-size: 16px;
-            margin: 10px 0;
-            color: #333;
-        }
-
-        .product-card p {
-            margin: 6px 0;
-            font-size: 14px;
-        }
-
-        .product-card input[type="submit"] {
-            margin-top: 10px;
-            padding: 6px 12px;
-            background-color: #f33;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .welcome {
-            color: white;
-            font-weight: bold;
-        }
-
-    </style>
 </head>
 <body>
 
@@ -294,4 +117,9 @@
 </div>
 
 </body>
+
+<footer>
+    <p>&copy; 2025 FPT Shop. All rights reserved.</p>
+</footer>
+
 </html>
