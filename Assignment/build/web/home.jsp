@@ -4,6 +4,13 @@
 <%@page import="java.util.List"%>
 <%@page import="utils.AuthUtils"%>
 
+<%
+    UserDTO user = null;
+    if (AuthUtils.isLoggedIn(request)) {
+        user = AuthUtils.getCurrentUser(request);
+    }
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,6 +57,50 @@
             padding: 5px 10px;
             font-weight: bold;
             cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: #f33;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content button {
+            color: black;
+            padding: 10px 12px;
+            text-decoration: none;
+            display: block;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .dropdown-content button:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
         .search-bar {
@@ -155,39 +206,34 @@
 <header>
     <div><h2>FPT Shop</h2></div>
     <nav>
-        <% if (!AuthUtils.isLoggedIn(request)) { %>
+        <% if (user == null) { %>
             <a href="signup.jsp">Đăng ký</a>
             <a href="login.jsp">Đăng nhập</a>
-        <% } else {
-            UserDTO user = AuthUtils.getCurrentUser(request);
-        %>
-<<<<<<< HEAD
+        <% } else { %>
             <span class="welcome">Xin chào, <%= user.getName() %></span>
             <form action="MainController" method="post" style="display:inline;">
                 <input type="hidden" name="action" value="Logout">
                 <input type="submit" value="Đăng xuất">
             </form>
-        <% } %>
-    </nav>
-</header>
-=======
-               <form method="post" action="MainController">
+            <form method="post" action="MainController">
                 <div class="dropdown">
-                  <button class="dropbtn"><%=user.getName()%></button>
-                  <div class="dropdown-content">
-                    <button type="submit" >Delete Account</button>
-                    <button type="submit" >Update Profile</button>
-                    <button type="submit" name="action" value="logout" >Logout</button>
-                  </div>
+                    <button class="dropbtn"><%= user.getName() %></button>
+                    <div class="dropdown-content">
+                        <button type="submit" name="action" value="DeleteAccount">Delete Account</button>
+                        <button type="submit" name="action" value="UpdateProfile">Update Profile</button>
+                        <button type="submit" name="action" value="Logout">Logout</button>
+                    </div>
                 </div>
-              </form>
-                  
+            </form>
             <div>
-                <form>
+                <form action="MainController" method="get">
+                    <input type="hidden" name="action" value="MyOrder">
                     <input type="submit" value="My Order"/>
                 </form>
             </div>
->>>>>>> f0947c0c6aeb10140ea06fe91e992d3497d6e8ff
+        <% } %>
+    </nav>
+</header>
 
 <!-- Search bar -->
 <div class="search-bar">
