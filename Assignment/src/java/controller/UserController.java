@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package controller;
 
 import java.io.IOException;
@@ -8,39 +11,43 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.DAO.UserDAO;
+import model.DTO.UserDTO;
 
-@WebServlet(name = "MainController", urlPatterns = {"/MainController", "", "/"})
-public class MainController extends HttpServlet {
+/**
+ *
+ * @author ADMIN
+ */
+@WebServlet(name = "UserController", urlPatterns = {"/UserController"})
+public class UserController extends HttpServlet {
 
+    private static final String LOGIN_PAGE = "login.jsp";
     private static final String HOME_PAGE = "home.jsp";
-    
-    private boolean isUserAction(String action)
-    {
-        return     action.equals("login")
-                || action.equals("logout");
-    }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String url = HOME_PAGE;
         
+        String url = "";
         try
         {
             String action = request.getParameter("action");
             
-            if (isUserAction(action))
+            if (action.equals("login"))
             {
-                url = "/UserController";
+                url = handleLogin(request, response);
             }
-            else
+            else if (action.equals("logout"))
             {
-                request.setAttribute("message", "Invalid action: " + action);
-                url = HOME_PAGE;
+                url = handleLogout(request, response);
             }
-        }
-        catch (Exception e) {
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("message", "System error occurred!");
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
@@ -85,5 +92,35 @@ public class MainController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private String handleLogin(HttpServletRequest request, HttpServletResponse response)
+    {
+        String url = LOGIN_PAGE;
+       HttpSession session = request.getSession();
+       
+       String username = request.getParameter("un");
+       String password = request.getParameter("pw");
+
+       UserDAO ud = new UserDAO();
+
+       if (ud.login(username, password))
+       {
+           UserDTO user = ud.getUserByUsername(username);
+           
+           url = HOME_PAGE;
+           session.setAttribute("user", user);
+       }
+       else
+       {
+           url = LOGIN_PAGE;
+           request.setAttribute("message", "Username or Password Incorrect! ^^");
+       }
+       
+       return url;
+    }
+
+    private String handleLogout(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }
