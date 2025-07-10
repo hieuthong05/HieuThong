@@ -20,6 +20,19 @@ public class MainController extends HttpServlet {
                 || action.equals("logout");
     }
     
+    private boolean isProducttAction(String action)
+    {
+        return     action.equals("displayProduct")
+                || action.equals("viewProductDetails")
+                || action.equals("getProductByCategory")
+                || action.equals("getProductByBrand")
+                || action.equals("search")
+                
+                || action.equals("create")
+                || action.equals("update")
+                || action.equals("delete");
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
