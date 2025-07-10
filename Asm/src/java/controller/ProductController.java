@@ -8,6 +8,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.DAO.ProductDAO;
+import model.DTO.ProductDTO;
 
 @WebServlet(name = "ProductController", urlPatterns = {"/ProductController"})
 public class ProductController extends HttpServlet {
@@ -20,8 +23,8 @@ public class ProductController extends HttpServlet {
             String action = request.getParameter("action");
             
             //----action cua User -----
-            if(action.equals("dislayProducts")){
-                url = handleDislayProducts(request,response);
+            if(action.equals("displayProducts")){
+                url = handleDisplayProducts(request,response);
             }else if(action.equals("viewProductDetails")){
                 url = handleViewProductDetails(request,response);
             }else if(action.equals("getProductByCategory()")){
@@ -85,8 +88,15 @@ public class ProductController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private String handleDislayProducts(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private String handleDisplayProducts(HttpServletRequest request, HttpServletResponse response) {
+        try{
+            ProductDAO dao = new ProductDAO();
+            List<ProductDTO> list = dao.getAll();
+            request.setAttribute("products", list);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "home.jsp";
     }
 
     private String handleViewProductDetails(HttpServletRequest request, HttpServletResponse response) {

@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.DAO.ProductDAO"%>
 <%@page import="model.DTO.UserDTO"%>
 <%@page import="model.DTO.ProductDTO"%>
 <%@page import="java.util.List"%>
@@ -10,6 +11,12 @@
         user = AuthUtils.getCurrentUser(request);
     }
 %>
+<%
+    ProductDAO dao = new ProductDAO();
+    List<ProductDTO> products = dao.getAll();
+    request.setAttribute("products", products);
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -92,11 +99,11 @@
     <h3>Sản phẩm nổi bật</h3>
     <div class="product-grid">
         <%
-            List<ProductDTO> products = (List<ProductDTO>) request.getAttribute("products");
             if (products != null && !products.isEmpty()) {
                 for (ProductDTO p : products) {
         %>
         <div class="product-card">
+            <img src="${pageContext.request.contextPath}/<%= p.getImageUrl() %>" alt="<%= p.getName() %>" width="200px">
             <h3><%= p.getName() %></h3>
             <p><strong>Giá:</strong> <%= String.format("%,.0f", p.getPrice()) %> đ</p>
             <p><strong>Tồn kho:</strong> <%= p.getStock() %></p>
@@ -106,6 +113,7 @@
                 <input type="submit" value="Xem chi tiết">
             </form>
         </div>
+
         <%
                 }
             } else {
