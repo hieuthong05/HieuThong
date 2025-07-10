@@ -142,6 +142,8 @@ public class UserController extends HttpServlet {
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        
+        return "";
     }
 
 }
