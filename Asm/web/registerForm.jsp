@@ -42,7 +42,7 @@
             
             <div>
                 <input type="submit" value="Sign Up"/>
-                <input type="reset" value="Reset Form"/>
+                <input type="reset" value="Reset"/>
             </div>
         </form>
     </body>
