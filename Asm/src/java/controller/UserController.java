@@ -142,8 +142,12 @@ public class UserController extends HttpServlet {
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String cfPassword = request.getParameter("cfPassword");
         
-        return "";
+        UserDTO us = new UserDTO(userName, fullName, email, password);
+        request.setAttribute("us", us);
+        return "registerForm";
+
     }
 
 }
