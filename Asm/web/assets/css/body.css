@@ -4,6 +4,7 @@ body {
     background-color: #f8f8f8;
 }
 
+/* Search Bar */
 .search-bar {
     background-color: white;
     padding: 10px 20px;
@@ -30,6 +31,7 @@ body {
     cursor: pointer;
 }
 
+/* Category Bar */
 .category-bar {
     background-color: white;
     padding: 10px 20px;
@@ -50,42 +52,75 @@ body {
     border-radius: 4px;
 }
 
+/* Container and Grid */
 .container {
     padding: 20px;
 }
 
 .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
+    justify-content: flex-start;
+    padding: 10px;
 }
 
+/* Product Card */
 .product-card {
-    background-color: white;
-    border: 1px solid #ddd;
-    padding: 15px;
-    text-align: center;
-    border-radius: 6px;
-    transition: box-shadow 0.3s ease;
+    width: 250px;
+    height: 350px;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
 }
 
-.product-card:hover {
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* Image Wrapper - Chiếm 50% chiều cao */
+.product-img-wrapper {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+    padding: 5px;
+    box-sizing: border-box;
 }
 
-.product-card h3 {
+/* Image - Không bị tràn, không méo */
+.product-img-wrapper img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Info Phần dưới - Chiếm 50% còn lại */
+.product-info {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.product-info h3 {
+    margin: 0;
     font-size: 16px;
-    margin: 10px 0;
     color: #333;
 }
 
-.product-card p {
-    margin: 6px 0;
+.product-info p {
+    margin: 4px 0;
     font-size: 14px;
 }
 
-.product-card input[type="submit"] {
-    margin-top: 10px;
+.product-info input[type="submit"] {
+    margin-top: auto;
     padding: 6px 12px;
     background-color: #f33;
     color: white;

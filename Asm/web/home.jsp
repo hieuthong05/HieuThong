@@ -103,16 +103,22 @@
                 for (ProductDTO p : products) {
         %>
         <div class="product-card">
-            <img src="${pageContext.request.contextPath}/<%= p.getImageUrl() %>" alt="<%= p.getName() %>" width="200px">
-            <h3><%= p.getName() %></h3>
-            <p><strong>Giá:</strong> <%= String.format("%,.0f", p.getPrice()) %> đ</p>
-            <p><strong>Tồn kho:</strong> <%= p.getStock() %></p>
-            <form action="MainController" method="get">
-                <input type="hidden" name="action" value="ViewProductDetails">
-                <input type="hidden" name="productId" value="<%= p.getProductId() %>">
-                <input type="submit" value="Xem chi tiết">
-            </form>
+            <div class="product-img-wrapper">
+                <img src="${pageContext.request.contextPath}/<%= p.getImageUrl() %>" alt="<%= p.getName() %>">
+            </div>
+            <div class="product-info">
+                <h3><%= p.getName() %></h3>
+                <p><strong>Giá:</strong> <%= String.format("%,.0f", p.getPrice()) %> đ</p>
+                <p><strong>Tồn kho:</strong> <%= p.getStock() %></p>
+                <form action="MainController" method="get">
+                    <input type="hidden" name="action" value="ViewProductDetails">
+                    <input type="hidden" name="productId" value="<%= p.getProductId() %>">
+                    <input type="submit" value="Xem chi tiết">
+                </form>
+            </div>
         </div>
+
+
 
         <%
                 }

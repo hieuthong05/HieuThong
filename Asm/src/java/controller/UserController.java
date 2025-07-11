@@ -146,11 +146,8 @@ public class UserController extends HttpServlet {
         
         UserDTO us = new UserDTO(userName, fullName, email, password);
         request.setAttribute("us", us);
-<<<<<<< Updated upstream
         return "registerForm";
 
-=======
->>>>>>> Stashed changes
     }
 
 }
