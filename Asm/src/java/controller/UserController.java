@@ -148,11 +148,7 @@ public class UserController extends HttpServlet {
         
         UserDTO us = new UserDTO(userName, fullName, email, password);
         request.setAttribute("us", us);
-<<<<<<< HEAD
-        return "registerForm";
-
-=======
-        
+   
         if (udao.isUserExists(userName))
         {
             errorMessage = "<br/> User Name is already exists!";
@@ -195,7 +191,6 @@ public class UserController extends HttpServlet {
         request.setAttribute("errorMessage", errorMessage);
         request.setAttribute("message", message);
         return "registerForm.jsp";
->>>>>>> b32aee3a31d61c6a1f9a8cb8fd227333605b8a51
     }
 
 }
