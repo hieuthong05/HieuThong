@@ -25,6 +25,7 @@ public class UserController extends HttpServlet {
 
     private static final String LOGIN_PAGE = "login.jsp";
     private static final String HOME_PAGE = "home.jsp";
+    UserDAO udao = new UserDAO();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -138,6 +139,7 @@ public class UserController extends HttpServlet {
     {
         String errorMessage = "";
         String message = "";
+        
         String userName = request.getParameter("userName");
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
@@ -146,11 +148,49 @@ public class UserController extends HttpServlet {
         
         UserDTO us = new UserDTO(userName, fullName, email, password);
         request.setAttribute("us", us);
-<<<<<<< Updated upstream
-        return "registerForm";
-
-=======
->>>>>>> Stashed changes
+        
+        if (udao.isUserExists(userName))
+        {
+            errorMessage = "<br/> User Name is already exists!";
+        }
+        if (userName == null || userName.trim().isEmpty())
+        {
+            errorMessage += "<br/> Username Must Be NON-EMPTY!";
+        }
+        if (fullName == null || fullName.trim().isEmpty())
+        {
+            errorMessage += "<br/> Full Name Must Be NON-EMPTY!";
+        }
+        if (email == null || email.trim().isEmpty())
+        {
+            errorMessage += "<br/> Email Must Be NON-EMPTY!";
+        }
+        if (password == null || password.trim().isEmpty())
+        {
+            errorMessage += "<br/> Password Must Be NON-EMPTY!";
+        }
+        if (cfPassword == null || cfPassword.trim().isEmpty())
+        {
+            errorMessage += "<br/> Confirm Password Must Be NON-EMPTY!";
+        }    
+        if (!password.equals(cfPassword))
+        {
+            errorMessage += "<br/> Fail Confirm Password (Not Match)!";
+        }
+        if (errorMessage.isEmpty())
+        {
+            if (!udao.create(us))
+            {
+                errorMessage += "<br/> Sign Up Failed!";
+            }
+        }
+        if (errorMessage.isEmpty())
+        {
+            message = "Sign Up Successfully. ^^";
+        }
+        request.setAttribute("errorMessage", errorMessage);
+        request.setAttribute("message", message);
+        return "registerForm.jsp";
     }
 
 }
