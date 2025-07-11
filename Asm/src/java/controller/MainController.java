@@ -17,7 +17,8 @@ public class MainController extends HttpServlet {
     private boolean isUserAction(String action)
     {
         return     action.equals("login")
-                || action.equals("logout");
+                || action.equals("logout")
+                || action.equals("register");
     }
     
     private boolean isProducttAction(String action)
