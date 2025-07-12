@@ -56,7 +56,12 @@
 <body>
 
     <header>
-        <div><h2>FPT Shop</h2></div>
+        <div>
+            <h2>
+                <a href="home.jsp" style="text-decoration: none; color: inherit;">FPT Shop</a>
+            </h2>
+                
+        </div>
         <nav>
             <% if (user == null) { %>
                 <a href="registerForm.jsp">Đăng ký</a>
