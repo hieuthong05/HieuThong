@@ -4,6 +4,50 @@ body {
     background-color: #f4f4f4;
 }
 
+/* Search Bar */
+.search-bar {
+    background-color: white;
+    padding: 12px 20px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+}
+
+.search-form {
+    width: 100%;
+    max-width: 500px;
+}
+
+.search-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-input-wrapper i {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 16px;
+}
+
+.search-input-wrapper input[type="text"] {
+    width: 100%;
+    padding: 10px 12px 10px 38px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.search-input-wrapper input[type="text"]:focus {
+    border-color: #f33;
+    box-shadow: 0 0 5px rgba(243, 51, 51, 0.4);
+}
+
+/* Product Details Section */
 .product-details {
     display: flex;
     align-items: flex-start;
@@ -46,9 +90,65 @@ body {
 .product-info .price {
     font-size: 20px;
     font-weight: bold;
-    color: #e53935; /* đỏ */
+    color: #e53935;
 }
 
 .product-info .stock {
-    color: #43a047; /* xanh */
+    color: #43a047;
+}
+
+/* Product Actions (below the detail box) */
+.product-actions-center {
+    max-width: 900px;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* Icon button - giỏ hàng */
+.btn-cart {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e53935;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-cart:hover {
+    background-color: #d32f2f;
+}
+
+/* Mua ngay dài full chiều ngang */
+.btn-buy-full {
+    flex: 1;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    background-color: #2e7d32;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-buy-full:hover {
+    background-color: #1b5e20;
+}
+
+button:focus {
+    outline: none;
 }

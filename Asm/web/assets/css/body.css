@@ -42,7 +42,7 @@ body {
 /* Input search chính */
 .search-input-wrapper input[type="text"] {
     width: 100%;
-    padding: 10px 12px 10px 38px; /* Padding left để chừa chỗ cho icon */
+    padding: 10px 12px 10px 38px;
     border: 1px solid #ccc;
     border-radius: 25px;
     font-size: 14px;
@@ -93,14 +93,29 @@ body {
     flex: 1;
     padding: 20px;
     box-sizing: border-box;
+
+}
+
+.section-title {
+    width: fit-content;
+    font-size: 22px;
+    color: #fff;
+    background-color: #e53935; /* Màu nền đỏ nổi bật */
+    padding: 10px 20px;
+    border-radius: 25px; /* Bo tròn mạnh như badge */
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow
 }
 
 .product-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: flex-start;
-    padding: 10px;
+    justify-content: flex-start; 
+    max-width: 2000px; 
 }
 
 /* Product Card */

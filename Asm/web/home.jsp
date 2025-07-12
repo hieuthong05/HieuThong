@@ -58,7 +58,6 @@
             <a href="registerForm.jsp">Đăng ký</a>
             <a href="login.jsp">Đăng nhập</a>
         <% } else { %>
-            <span class="welcome">Xin chào, <%= user.getName() %></span>
             <form action="MainController" method="post" style="display:inline;">
                 <input type="hidden" name="action" value="Logout">
                 <input type="submit" value="Đăng xuất">
@@ -123,7 +122,9 @@
 
     <!-- Product Grid -->
     <div class="container">
-        <h3><i class="fa-solid fa-laptop"></i> Sản phẩm nổi bật</h3>
+        <h3 class="section-title">
+            <i class="fa-solid fa-laptop"></i> Sản phẩm nổi bật
+        </h3>
         <div class="product-grid">
             <% for (ProductDTO p : products) { %>
             <div class="product-card">
