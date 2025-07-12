@@ -13,7 +13,7 @@ public class ProductDAO {
 
     //SQL
     private static final String GET_ALL_PRODUCTS = "SELECT productId,name,brandId,categoryId,price,stock,description,imageUrl FROM Product";
-    private static final String GET_PRODUCT_BY_ID = "SELECT name,brandId,categoryId,price,stock,description,imageUrl FROM Product WHERE productId = ?";
+    private static final String GET_PRODUCT_BY_ID = "SELECT productId,name,brandId,categoryId,price,stock,description,imageUrl FROM Product WHERE productId = ?";
     private static final String GET_PRODUCT_BY_CATEGORY = "SELECT productId,name,brandId,price,stock,description,imageUrl FROM Product WHERE categoryId = ?";
     private static final String GET_PRODUCT_BY_BRAND = "SELECT productId,name,categoryId,price,stock,description,imageUrl FROM Product WHERE brandId = ?";
     
@@ -53,6 +53,42 @@ public class ProductDAO {
         }
         return products;
     }
+    
+    public ProductDTO getProductById(int productId) {
+        ProductDTO product = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DbUtils.getConnection();
+            ps = conn.prepareStatement(GET_PRODUCT_BY_ID);
+            ps.setInt(1, productId);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                product = new ProductDTO();
+                product.setProductId(rs.getInt("productId"));
+                product.setName(rs.getString("name"));
+                product.setBrandId(rs.getInt("brandId"));
+                product.setCategoryId(rs.getInt("categoryId"));
+                product.setPrice(rs.getDouble("price"));
+                product.setStock(rs.getInt("stock"));
+                product.setDescription(rs.getString("description"));
+                product.setImageUrl(rs.getString("imageUrl"));
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error in getProductById(): " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+
+        return product;
+    }
+
+    
     
     public List<ProductDTO> getProductsByCategoryId(int categoryId) {
         List<ProductDTO> products = new ArrayList<>();

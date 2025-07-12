@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.product-details {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.product-details img {
+    width: 300px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-info h2 {
+    margin-top: 0;
+    font-size: 28px;
+    color: #333;
+}
+
+.product-info p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.product-info p strong {
+    color: #000;
+}
+
+.product-info .price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e53935; /* đỏ */
+}
+
+.product-info .stock {
+    color: #43a047; /* xanh */
+}

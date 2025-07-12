@@ -43,7 +43,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS Home Page -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">    
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}//assets/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/body.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
 
@@ -85,12 +85,15 @@
 
 <!-- Search bar -->
 <div class="search-bar">
-    <form action="MainController" method="get">
-        <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm...">
+    <form action="MainController" method="get" class="search-form">
         <input type="hidden" name="action" value="Search">
-        <button type="submit"><i class="fas fa-search"></i></button>
+        <div class="search-input-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm...">
+        </div>
     </form>
 </div>
+
 
 <div class="main-layout">
     <!-- Sidebar -->
@@ -132,7 +135,7 @@
                     <p><strong>Giá:</strong> <%= String.format("%,.0f", p.getPrice()) %> đ</p>
                     <p><strong>Tồn kho:</strong> <%= p.getStock() %></p>
                     <form action="MainController" method="get">
-                        <input type="hidden" name="action" value="ViewProductDetails">
+                        <input type="hidden" name="action" value="viewProductDetails">
                         <input type="hidden" name="productId" value="<%= p.getProductId() %>">
                         <input type="submit" value="Xem chi tiết">
                     </form>

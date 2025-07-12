@@ -117,7 +117,25 @@ public class ProductController extends HttpServlet {
     }
 
     private String handleViewProductDetails(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            int productId = Integer.parseInt(request.getParameter("productId"));
+
+            ProductDAO productDAO = new ProductDAO();
+            ProductDTO product = productDAO.getProductById(productId); 
+
+            if (product != null) {
+                request.setAttribute("product", product); 
+                return "productDetails.jsp"; 
+            } else {
+                request.setAttribute("error", "Product not found!");
+                return "error.jsp";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Error loading product details.");
+            return "error.jsp";
+        }
     }
 
     private String handleGetProductByCategory(HttpServletRequest request, HttpServletResponse response) {
