@@ -176,7 +176,28 @@ public class ProductController extends HttpServlet {
 
 
     private String handleSearch(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String keyword = request.getParameter("keyword");
+            request.setAttribute("keyword", keyword);
+            
+            ProductDAO productDAO = new ProductDAO();
+            List<ProductDTO> products = productDAO.getProductByName(keyword);
+            request.setAttribute("products", products);
+
+            
+            CategoryDAO cdao = new CategoryDAO();
+            request.setAttribute("categories", cdao.getAll());
+
+            BrandDAO bdao = new BrandDAO();
+            request.setAttribute("brands", bdao.getAll());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Search error: " + e.getMessage());
+            return "error.jsp";
+        }
+
+        return "home.jsp";
     }
 
     private String handleCreate(HttpServletRequest request, HttpServletResponse response) {
