@@ -41,7 +41,8 @@
     <title>FPT Shop - Trang chủ</title>   
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS Home Page -->    
+    <!-- CSS Home Page -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">    
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/body.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
@@ -87,7 +88,7 @@
     <form action="MainController" method="get">
         <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm...">
         <input type="hidden" name="action" value="Search">
-        <input type="submit" value="Tìm kiếm">
+        <button type="submit"><i class="fas fa-search"></i></button>
     </form>
 </div>
 
@@ -119,7 +120,7 @@
 
     <!-- Product Grid -->
     <div class="container">
-        <h3>Sản phẩm nổi bật</h3>
+        <h3><i class="fa-solid fa-laptop"></i> Sản phẩm nổi bật</h3>
         <div class="product-grid">
             <% for (ProductDTO p : products) { %>
             <div class="product-card">
