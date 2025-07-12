@@ -9,7 +9,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.DAO.BrandDAO;
+import model.DAO.CategoryDAO;
 import model.DAO.ProductDAO;
+import model.DTO.BrandDTO;
+import model.DTO.CategoryDTO;
 import model.DTO.ProductDTO;
 
 @WebServlet(name = "ProductController", urlPatterns = {"/ProductController"})
@@ -23,11 +27,15 @@ public class ProductController extends HttpServlet {
             String action = request.getParameter("action");
             
             //----action cua User -----
+            if(action.equals("displayCategory")){
+                url = handleDisplayCategory(request,response);
+            }
+            
             if(action.equals("displayProducts")){
                 url = handleDisplayProducts(request,response);
             }else if(action.equals("viewProductDetails")){
                 url = handleViewProductDetails(request,response);
-            }else if(action.equals("getProductByCategory()")){
+            }else if(action.equals("getProductByCategory")){
                 url = handleGetProductByCategory(request,response);
             }else if(action.equals("getProductByBrand")){
                 url = handleGetProductByBrand(request,response);
@@ -93,6 +101,15 @@ public class ProductController extends HttpServlet {
             ProductDAO dao = new ProductDAO();
             List<ProductDTO> list = dao.getAll();
             request.setAttribute("products", list);
+            
+            CategoryDAO cdao = new CategoryDAO();
+            List<CategoryDTO> categories = cdao.getAll();
+            request.setAttribute("categories", categories);
+            
+            BrandDAO bdao = new BrandDAO();
+            List<BrandDTO> brands = bdao.getAll();
+            request.setAttribute("brands", brands);
+            
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -104,12 +121,41 @@ public class ProductController extends HttpServlet {
     }
 
     private String handleGetProductByCategory(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    try {
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        ProductDAO dao = new ProductDAO();
+        List<ProductDTO> products = dao.getProductsByCategoryId(categoryId);
+        request.setAttribute("products", products);
+
+        CategoryDAO cdao = new CategoryDAO();
+        List<CategoryDTO> categories = cdao.getAll();
+        request.setAttribute("categories", categories);
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return "home.jsp";
+}
+
 
     private String handleGetProductByBrand(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            int brandId = Integer.parseInt(request.getParameter("brandId"));
+            ProductDAO dao = new ProductDAO();
+            request.setAttribute("products", dao.getProductsByBrandId(brandId));
+
+            CategoryDAO cdao = new CategoryDAO();
+            request.setAttribute("categories", cdao.getAll());
+
+            BrandDAO bdao = new BrandDAO();
+            request.setAttribute("brands", bdao.getAll());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "home.jsp";
     }
+
 
     private String handleSearch(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -125,6 +171,17 @@ public class ProductController extends HttpServlet {
 
     private String handleDelete(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private String handleDisplayCategory(HttpServletRequest request, HttpServletResponse response) {
+        try{
+            CategoryDAO dao = new CategoryDAO();
+            List<CategoryDTO> list = dao.getAll();
+            request.setAttribute("categories", list);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "home.jsp";
     }
 
 }

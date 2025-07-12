@@ -31,30 +31,43 @@ body {
     cursor: pointer;
 }
 
-/* Category Bar */
-.category-bar {
-    background-color: white;
-    padding: 10px 20px;
+/* --- Layout Container --- */
+.main-layout {
     display: flex;
-    justify-content: center;
-    border-bottom: 1px solid #ccc;
 }
 
-.category-bar form {
-    margin: 0 5px;
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #fff;
+    padding: 15px;
+    border-right: 1px solid #ccc;
+    box-sizing: border-box;
 }
 
-.category-bar input[type="submit"] {
+.sidebar h4 {
+    margin-top: 0;
+}
+
+.sidebar form {
+    margin-bottom: 8px;
+}
+
+.sidebar input[type="submit"] {
     background-color: #eee;
     border: 1px solid #ccc;
-    padding: 6px 14px;
+    padding: 6px 12px;
     cursor: pointer;
     border-radius: 4px;
+    width: 100%;
+    text-align: left;
 }
 
-/* Container and Grid */
+/* Container and Grid (Right Panel) */
 .container {
+    flex: 1;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .product-grid {
@@ -78,7 +91,7 @@ body {
     flex-direction: column;
 }
 
-/* Image Wrapper - Chiếm 50% chiều cao */
+/* Image Wrapper */
 .product-img-wrapper {
     height: 50%;
     width: 100%;
@@ -90,7 +103,6 @@ body {
     box-sizing: border-box;
 }
 
-/* Image - Không bị tràn, không méo */
 .product-img-wrapper img {
     max-height: 100%;
     max-width: 100%;
@@ -98,7 +110,7 @@ body {
     display: block;
 }
 
-/* Info Phần dưới - Chiếm 50% còn lại */
+/* Product Info */
 .product-info {
     height: 50%;
     display: flex;

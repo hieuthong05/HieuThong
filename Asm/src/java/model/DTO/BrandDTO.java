@@ -4,18 +4,31 @@ package model.DTO;
 public class BrandDTO {
     private int brandId;
     private String name;
+    private String origin;
     private int foundedYear;
+    
     private String description;
 
     public BrandDTO() {
     }
 
-    public BrandDTO(int brandId, String name, int foundedYear, String description) {
+    public BrandDTO(int brandId, String name, String origin, int foundedYear, String description) {
         this.brandId = brandId;
         this.name = name;
+        this.origin = origin;
         this.foundedYear = foundedYear;
         this.description = description;
     }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    
 
     public int getBrandId() {
         return brandId;

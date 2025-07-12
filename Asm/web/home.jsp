@@ -1,4 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.DTO.BrandDTO"%>
+<%@page import="model.DAO.CategoryDAO"%>
+<%@page import="model.DTO.CategoryDTO"%>
 <%@page import="model.DAO.ProductDAO"%>
 <%@page import="model.DTO.UserDTO"%>
 <%@page import="model.DTO.ProductDTO"%>
@@ -12,10 +15,23 @@
     }
 %>
 <%
-    ProductDAO dao = new ProductDAO();
-    List<ProductDTO> products = dao.getAll();
-    request.setAttribute("products", products);
+    List<ProductDTO> products = (List<ProductDTO>) request.getAttribute("products");
+    if (products == null) {
+        products = new ProductDAO().getAll();
+    }
+
+    List<CategoryDTO> categories = (List<CategoryDTO>) request.getAttribute("categories");
+    if (categories == null) {
+        categories = new CategoryDAO().getAll();
+    }
+    
+    List<BrandDTO> brands = (List<BrandDTO>) request.getAttribute("brands");
+    if (brands == null) {
+        brands = new model.DAO.BrandDAO().getAll();
+    }
+
 %>
+
 
 
 <!DOCTYPE html>
@@ -75,61 +91,58 @@
     </form>
 </div>
 
-<!-- Category Filter -->
-<div class="category-bar">
-    <form action="MainController" method="get">
-        <input type="hidden" name="action" value="GetProductByCategory">
-        <input type="hidden" name="categoryId" value="1">
-        <input type="submit" value="Laptop">
-    </form>
-    <form action="MainController" method="get">
-        <input type="hidden" name="action" value="GetProductByCategory">
-        <input type="hidden" name="categoryId" value="2">
-        <input type="submit" value="Smartphone">
-    </form>
-    <form action="MainController" method="get">
-        <input type="hidden" name="action" value="GetProductByCategory">
-        <input type="hidden" name="categoryId" value="3">
-        <input type="submit" value="Tablet">
-    </form>
-</div>
-
-<!-- Product Grid -->
-<div class="container">
-    <h3>Sản phẩm nổi bật</h3>
-    <div class="product-grid">
+<div class="main-layout">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h4>Danh mục</h4>
         <%
-            if (products != null && !products.isEmpty()) {
-                for (ProductDTO p : products) {
+            for (CategoryDTO c : categories) {
         %>
-        <div class="product-card">
-            <div class="product-img-wrapper">
-                <img src="${pageContext.request.contextPath}/<%= p.getImageUrl() %>" alt="<%= p.getName() %>">
+        <form action="ProductController" method="get">
+            <input type="hidden" name="action" value="getProductByCategory">
+            <input type="hidden" name="categoryId" value="<%= c.getCategoryId() %>">
+            <input type="submit" value="<%= c.getName() %>">
+        </form>
+        <% } %>
+
+        <h4>Thương hiệu</h4>
+        <%
+            for (BrandDTO b : brands) {
+        %>
+        <form action="ProductController" method="get">
+            <input type="hidden" name="action" value="getProductByBrand">
+            <input type="hidden" name="brandId" value="<%= b.getBrandId() %>">
+            <input type="submit" value="<%= b.getName() %>">
+        </form>
+        <% } %>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="container">
+        <h3>Sản phẩm nổi bật</h3>
+        <div class="product-grid">
+            <% for (ProductDTO p : products) { %>
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <img src="${pageContext.request.contextPath}/<%= p.getImageUrl() %>" alt="<%= p.getName() %>">
+                </div>
+                <div class="product-info">
+                    <h3><%= p.getName() %></h3>
+                    <p><strong>Giá:</strong> <%= String.format("%,.0f", p.getPrice()) %> đ</p>
+                    <p><strong>Tồn kho:</strong> <%= p.getStock() %></p>
+                    <form action="MainController" method="get">
+                        <input type="hidden" name="action" value="ViewProductDetails">
+                        <input type="hidden" name="productId" value="<%= p.getProductId() %>">
+                        <input type="submit" value="Xem chi tiết">
+                    </form>
+                </div>
             </div>
-            <div class="product-info">
-                <h3><%= p.getName() %></h3>
-                <p><strong>Giá:</strong> <%= String.format("%,.0f", p.getPrice()) %> đ</p>
-                <p><strong>Tồn kho:</strong> <%= p.getStock() %></p>
-                <form action="MainController" method="get">
-                    <input type="hidden" name="action" value="ViewProductDetails">
-                    <input type="hidden" name="productId" value="<%= p.getProductId() %>">
-                    <input type="submit" value="Xem chi tiết">
-                </form>
-            </div>
+            <% } %>
         </div>
-
-
-
-        <%
-                }
-            } else {
-        %>
-        <p>Không có sản phẩm nào để hiển thị.</p>
-        <%
-            }
-        %>
     </div>
 </div>
+
+
 
 </body>
 

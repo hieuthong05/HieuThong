@@ -34,6 +34,10 @@ public class MainController extends HttpServlet {
                 || action.equals("delete");
     }
     
+    private boolean isCategoryAction(String action){
+        return action.equals("displayCategory");
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
