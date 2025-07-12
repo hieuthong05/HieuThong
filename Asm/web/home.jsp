@@ -103,7 +103,7 @@
     <div class="main-layout">
         <!-- Sidebar -->
         <div class="sidebar">
-            <h4>Danh mục</h4>
+            <h4><i class="fa-solid fa-bullhorn"></i>Danh mục</h4>
             <%
                 for (CategoryDTO c : categories) {
             %>
@@ -114,7 +114,7 @@
             </form>
             <% } %>
 
-            <h4>Thương hiệu</h4>
+            <h4><i class="fa-solid fa-bullhorn"></i>Thương hiệu</h4>
             <%
                 for (BrandDTO b : brands) {
             %>
@@ -142,7 +142,7 @@
                     <div class="product-info">
                         <h3><%= p.getName() %></h3>
                         <p><strong>Giá:</strong> <%= String.format("%,.0f", p.getPrice()) %> đ</p>
-                        <p><strong>Tồn kho:</strong> <%= p.getStock() %></p>
+                        <p><strong>Stock:</strong> <%= p.getStock() %></p>
                         <form action="MainController" method="get">
                             <input type="hidden" name="action" value="viewProductDetails">
                             <input type="hidden" name="productId" value="<%= p.getProductId() %>">
