@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}//assets/css/productDetails.css">
 </head>
 <body>
+
+
     <header>
         <div><h2>FPT Shop</h2></div>
         <nav>
@@ -99,6 +101,6 @@
 <% } else { %>
     <p style="text-align:center; margin-top:50px;">Product not found.</p>
 <% } %>
-
+ <jsp:include page="footer.jsp"/>
 </body>
 </html>
