@@ -49,6 +49,10 @@ public class UserController extends HttpServlet {
             {
                 url = handleRegister(request, response);
             }
+            else if (action.equals("editProfile"))
+            {
+                url = handleEditProfile(request, response);
+            }
             
             
         } catch (Exception e) {
@@ -191,6 +195,24 @@ public class UserController extends HttpServlet {
         request.setAttribute("errorMessage", errorMessage);
         request.setAttribute("message", message);
         return "registerForm.jsp";
+    }
+
+    private String handleEditProfile(HttpServletRequest request, HttpServletResponse response)
+    {
+        String curUserName = request.getParameter("curUserName");
+        UserDTO us = udao.getUserByUsername(curUserName);
+        if (us != null)
+        {
+            request.setAttribute("us", us);
+            request.setAttribute("isEdit", true);
+            return "registerForm.jsp";
+        }
+        else
+        {
+            request.setAttribute("errorMessage", "Not Exists User!");
+            request.setAttribute("isEdit", true);
+            return "registerForm.jsp";
+        }
     }
 
 }

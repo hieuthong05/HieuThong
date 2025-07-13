@@ -33,9 +33,14 @@
       <div class="dropdown">
         <button class="dropbtn"><%= user.getName() %></button>
         <div class="dropdown-content">
-          <button form="profileForm" name="action" value="UpdateProfile">
-            Cập nhật thông tin
-          </button>
+            <form action="profile.jsp" method="post">
+                <button type="submit">Your Profile</button>
+            </form>
+            <form action="MainController" method="post">
+                <input type="hidden" name="action" value="editProfile"/>
+                <input type="hidden" name="curUserName" value="<%= user.getUserName()%>"/>
+                <button type="submit">Update Profile</button>
+            </form>
           <button form="profileForm" name="action" value="DeleteAccount">
             Xóa tài khoản
           </button>

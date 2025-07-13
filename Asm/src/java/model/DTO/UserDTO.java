@@ -15,6 +15,15 @@ public class UserDTO {
     private String password;
     private String role;
     private LocalDate createdAt;
+    private boolean isActive;
+
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
 
     public UserDTO() {
     }
@@ -52,6 +61,15 @@ public class UserDTO {
         this.email = email;
         this.password = password;
         this.role = "customer";
+    }
+
+    public UserDTO(String userName, String name, String email, String password, String role, boolean isActive) {
+        this.userName = userName;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.isActive = isActive;
     }
 
     public String getUserId() {

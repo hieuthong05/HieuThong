@@ -12,7 +12,7 @@ import utils.DbUtils;
  */
 public class UserDAO {
     
-     private static final String GET_USER_BY_USERNAME = "SELECT userId, userName, name, email, password, role, createdAt FROM Users WHERE userName = ?";
+     private static final String GET_USER_BY_USERNAME = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE userName = ?";
      private static final String CREATE_USER = "INSERT INTO Users (userName, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
      
      public UserDTO getUserByUsername(String username)
@@ -39,6 +39,7 @@ public class UserDAO {
                 user.setPassword(rs.getString("password"));
                 user.setRole(rs.getString("role"));
                 user.setCreatedAt(rs.getDate("createdAt").toLocalDate());
+                user.setIsActive(rs.getBoolean("isActive"));
             }    
         }
         catch (Exception e) {
