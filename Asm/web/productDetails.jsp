@@ -24,48 +24,8 @@
 <body>
 
 
-    <header>
-        <div><h2>FPT Shop</h2></div>
-        <nav>
-            <% if (user == null) { %>
-                <a href="registerForm.jsp">Đăng ký</a>
-                <a href="login.jsp">Đăng nhập</a>
-            <% } else { %>
-                <span class="welcome">Xin chào, <%= user.getName() %></span>
-                <form action="MainController" method="post" style="display:inline;">
-                    <input type="hidden" name="action" value="Logout">
-                    <input type="submit" value="Đăng xuất">
-                </form>
-                <form method="post" action="MainController">
-                    <div class="dropdown">
-                        <button class="dropbtn"><%= user.getName() %></button>
-                        <div class="dropdown-content">
-                            <button type="submit" name="action" value="DeleteAccount">Delete Account</button>
-                            <button type="submit" name="action" value="UpdateProfile">Update Profile</button>
-                            <button type="submit" name="action" value="Logout">Logout</button>
-                        </div>
-                    </div>
-                </form>
-                <div>
-                    <form action="MainController" method="get">
-                        <input type="hidden" name="action" value="MyOrder">
-                        <input type="submit" value="My Order"/>
-                    </form>
-                </div>
-            <% } %>
-        </nav>
-    </header>
+    <jsp:include page="header.jsp"/>
 
-<!-- Search bar -->
-<div class="search-bar">
-    <form action="MainController" method="get" class="search-form">
-        <input type="hidden" name="action" value="Search">
-        <div class="search-input-wrapper">
-            <i class="fas fa-search"></i>
-            <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm...">
-        </div>
-    </form>
-</div>
 
 <% if (product != null) { %>
     <div class="product-details">
@@ -102,5 +62,6 @@
     <p style="text-align:center; margin-top:50px;">Product not found.</p>
 <% } %>
  <jsp:include page="footer.jsp"/>
+
 </body>
 </html>

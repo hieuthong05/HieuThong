@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<<<<<<< HEAD
+
     <meta charset="UTF-8">
     <title>FPT Shop - Trang chủ</title>   
     
@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
 
 
-=======
+
   <meta charset="UTF-8">
   <title>FPT Shop - Trang chủ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/body.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
->>>>>>> 37073fce182561b7efbec0629ffc3bf034bda66b
+
 </head>
 <body>
 
