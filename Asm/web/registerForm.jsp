@@ -13,6 +13,8 @@
         <title>Register Form</title>
     </head>
     <body>
+        <jsp:include page="header.jsp"/>
+
         <%
             UserDTO user = (UserDTO) request.getAttribute("us");
             String errorMessage = (String) request.getAttribute("errorMessage");
@@ -57,5 +59,6 @@
         </form>
             <span style="color: red"><%=(errorMessage!=null)?errorMessage:""%></span>
             <span style="color: green"><%=(message!=null)?message:""%></span>
+             <jsp:include page="footer.jsp"/>
     </body>
 </html>
