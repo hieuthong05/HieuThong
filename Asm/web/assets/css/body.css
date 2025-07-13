@@ -101,5 +101,183 @@ body{
 }
 .btn-detail:hover{opacity:.9;}
 
-/* ========== 6. FOOTER (nếu có thêm CSS riêng) ========== */
-/* … */
+.sidebar input[type="submit"] {
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    text-align: left;
+}
+
+/* Container and Grid (Right Panel) */
+.container {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+
+}
+
+.section-title {
+    width: fit-content;
+    font-size: 22px;
+    color: #fff;
+    background-color: #e53935; /* Màu nền đỏ nổi bật */
+    padding: 10px 20px;
+    border-radius: 25px; /* Bo tròn mạnh như badge */
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start; 
+    max-width: 2000px; 
+}
+
+/* Product Card */
+/*.product-card {
+    width: 250px;
+    height: 350px;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow: visible;
+    border: 2px solid #ccc;
+    position: relative;
+    z-index: 1; 
+}
+.product-card:hover {
+    transform: scale(1.05);
+    background-color: gainsboro;
+    box-shadow: 0 0 12px 3px #f33;
+    border-color: transparent;
+}*/
+
+/* Tạo khung viền chạy bằng pseudo-element */
+.product-card {
+    width: 250px;
+    height: 350px;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+    background-color: gainsboro;
+    box-shadow: 0 0 12px 3px #f33;
+}
+
+/* Viền xoay với 2 lớp */
+.product-card::before,
+.product-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: conic-gradient( #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+    animation: spin 3s linear infinite;
+    transform-origin: center; /* Thêm dòng này để xoay quanh tâm */
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-card::before {
+    filter: blur(1.5rem);
+    opacity: 0.5;
+}
+
+.product-card:hover::before,
+.product-card:hover::after {
+    opacity: 0;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+/* Image Wrapper */
+.product-img-wrapper {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 20px solid white;
+}
+
+.product-img-wrapper img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+    position: relative;
+    z-index: 1; 
+}
+
+/* Product Info */
+.product-info {
+    position: relative; 
+    z-index: 1; 
+    background-color: #fff;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.product-info h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.product-info p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+.product-info input[type="submit"] {
+    margin-top: auto;
+    padding: 6px 12px;
+    background-color: #f33;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}

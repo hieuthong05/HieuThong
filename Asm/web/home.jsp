@@ -2,10 +2,39 @@
 <%@ page import="java.util.List, model.DTO.*, model.DAO.*" %>
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta charset="UTF-8">
         <title>FPT Shop – Trang chủ</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>FPT Shop - Trang chủ</title>   
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS Home Page -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">   
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}//assets/css/header.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/body.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
+
+
+
+  <meta charset="UTF-8">
+  <title>FPT Shop - Trang chủ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS chung -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/body.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
+
+</head>
+<body>
+
 
         <!-- Icon & CSS chung -->
         <link rel="stylesheet"
