@@ -1,0 +1,87 @@
+body {
+  background: #232526;
+  background: -webkit-linear-gradient(to right, #414345, #232526);
+  background: linear-gradient(to right, #414345, #232526);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+/* FORM chính */
+.form-container {
+  width: 500px;
+  margin: 50px auto;
+  background: #200122;
+  background: -webkit-linear-gradient(to right, #6f0000, #200122);
+  background: linear-gradient(to right, #6f0000, #200122);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+/* Tiêu đề trong form */
+.form-container h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 26px;
+}
+
+/* Các ô input, select, textarea */
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container input[type="file"],
+.form-container textarea,
+.form-container select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 14px;
+}
+
+/* Placeholder và focus */
+.form-container input::placeholder,
+.form-container textarea::placeholder {
+  color: #ddd;
+}
+
+.form-container input:focus,
+.form-container textarea:focus,
+.form-container select:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Submit button */
+.form-container input[type="submit"] {
+  width: 100%;
+  background-color: #f33;
+  color: white;
+  padding: 12px;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 15px;
+}
+
+.form-container input[type="submit"]:hover {
+  background-color: #c62828;
+}
+
+/* Dòng thông tin ảnh hiện tại */
+.form-container .current-image {
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  color: #ccc;
+}

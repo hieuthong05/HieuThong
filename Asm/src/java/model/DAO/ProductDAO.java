@@ -197,6 +197,30 @@ public class ProductDAO {
     
     return products;
     }
+    public void create(ProductDTO product) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DbUtils.getConnection();
+            ps = conn.prepareStatement(CREATE_PRODUCT);
+            ps.setString(1, product.getName());
+            ps.setInt(2, product.getBrandId());
+            ps.setInt(3, product.getCategoryId());
+            ps.setDouble(4, product.getPrice());
+            ps.setInt(5, product.getStock());
+            ps.setString(6, product.getDescription());
+            ps.setString(7, product.getImageUrl());
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            System.err.println("Error in create(): " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, ps, null);
+        }
+    }
+
 
     //
     private void closeResources(Connection conn, PreparedStatement ps, ResultSet rs) {
@@ -217,6 +241,33 @@ public class ProductDAO {
         }
     }
 
-    
+    public boolean update(ProductDTO product) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = DbUtils.getConnection();
+            ps = conn.prepareStatement(UPDATE_PRODUCT);
+
+            ps.setString(1, product.getName());
+            ps.setInt(2, product.getBrandId());
+            ps.setInt(3, product.getCategoryId());
+            ps.setDouble(4, product.getPrice());
+            ps.setInt(5, product.getStock());
+            ps.setString(6, product.getDescription());
+            ps.setString(7, product.getImageUrl());
+            ps.setInt(8, product.getProductId());
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.err.println("Error in update(): " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, ps, null);
+        }
+
+        return false;
+    }
+
 
 }   

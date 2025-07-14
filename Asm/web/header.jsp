@@ -7,17 +7,21 @@
 %>
 
 <header>
+    <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="stylesheet"
+              href="${pageContext.request.contextPath}/assets/css/header.css">
+    
   <div>
     <h2>
       <a href="${pageContext.request.contextPath}/MainController?action=displayProducts"
          style="color: inherit; text-decoration: none;">
         FPT Shop
       </a>
-      <!-- THÊM BIỂU TƯỢNG GIỎ HÀNG LUÔN HIỂN THỊ -->
+      
       <a href="${pageContext.request.contextPath}/CartController?action=viewCart"
          style="margin-left:20px; color: inherit; text-decoration: none;">
         <i class="fas fa-shopping-cart"></i>
-        <%-- có thể thêm số lượng: (<%= session.getAttribute("cartSize") %>) --%>
       </a>
     </h2>
   </div>
@@ -73,7 +77,7 @@
 </div>
 <%
     String cartMsg = (String) session.getAttribute("cartMessage");
-    if (cartMsg != null) {      // có thông báo => in toast
+    if (cartMsg != null) {     
 %>
     <div id="toast"
          style="position:fixed;bottom:30px;right:30px;
@@ -83,10 +87,10 @@
         <%= cartMsg %>
     </div>
     <script>
-      // Ẩn toast sau 3 giây
+
       setTimeout(()=> document.getElementById('toast').style.display='none', 3000);
     </script>
 <%
-      session.removeAttribute("cartMessage");   // xoá để không lặp lại
+      session.removeAttribute("cartMessage");   
     }
 %>

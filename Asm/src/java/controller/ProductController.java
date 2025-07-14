@@ -4,10 +4,14 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.List;
 import model.DAO.BrandDAO;
 import model.DAO.CategoryDAO;
@@ -15,7 +19,9 @@ import model.DAO.ProductDAO;
 import model.DTO.BrandDTO;
 import model.DTO.CategoryDTO;
 import model.DTO.ProductDTO;
+import utils.AuthUtils;
 
+@MultipartConfig
 @WebServlet(name = "ProductController", urlPatterns = {"/ProductController"})
 public class ProductController extends HttpServlet {
 
@@ -47,6 +53,10 @@ public class ProductController extends HttpServlet {
                 url = handleUpdate(request,response);
             }else if(action.equals("delete")){
                 url = handleDelete(request,response);
+            }else if(action.equals("showCreateForm")){
+                url = handleShowCreateForm(request, response);
+            }else if (action.equals("showUpdateForm")) {
+                url = handleShowUpdateForm(request, response);
             }
             
         }catch (Exception e){
@@ -201,12 +211,109 @@ public class ProductController extends HttpServlet {
     }
 
     private String handleCreate(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String checkError = "";
+        String message = "";
+        if (AuthUtils.isAdmin(request)) {
+            try {
+                // Upload ảnh
+                Part filePart = request.getPart("photo");
+                String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                // String fileName = System.currentTimeMillis() + "_" + originalFileName;
+                String fileName = originalFileName;
+                String uploadDir = getServletContext().getRealPath("") + File.separator + "uploads";
+                File dir = new File(uploadDir);
+                if (!dir.exists()) dir.mkdirs();
+
+                String filePath = uploadDir + File.separator + fileName;
+                filePart.write(filePath);
+
+                // Lấy dữ liệu từ form
+                String name = request.getParameter("name");
+                int brandId = Integer.parseInt(request.getParameter("brandId"));
+                double price = Double.parseDouble(request.getParameter("price"));
+                int stock = Integer.parseInt(request.getParameter("stock"));
+                String description = request.getParameter("description");
+                int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+                String imageUrl = "images/" + fileName;
+
+
+                ProductDTO product = new ProductDTO(0, name, brandId, price, stock, description, imageUrl, categoryId);
+                ProductDAO dao = new ProductDAO();
+                dao.create(product); 
+
+                request.setAttribute("message", "Thêm sản phẩm thành công!");
+                return handleDisplayProducts(request, response);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                request.setAttribute("error", "Create product failed: " + e.getMessage());
+                return "error.jsp";
+            }
+        }
+        CategoryDAO cdao = new CategoryDAO();
+        BrandDAO bdao = new BrandDAO();
+        request.setAttribute("checkError", checkError);
+        request.setAttribute("message", message);
+        
+        request.setAttribute("categories", cdao.getAll());
+        request.setAttribute("brands", bdao.getAll());
+        return "createProduct.jsp";
     }
 
     private String handleUpdate(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        if (!AuthUtils.isAdmin(request)) {
+            request.setAttribute("error", "Permission denied.");
+            return "error.jsp";
+        }
+
+        try {
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            String name = request.getParameter("name");
+            int brandId = Integer.parseInt(request.getParameter("brandId"));
+            double price = Double.parseDouble(request.getParameter("price"));
+            int stock = Integer.parseInt(request.getParameter("stock"));
+            String description = request.getParameter("description");
+            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+
+            // Kiểm tra có upload ảnh mới không
+            Part filePart = request.getPart("photo");
+            String imageUrl = null;
+            if (filePart != null && filePart.getSize() > 0) {
+                String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                String fileName = System.currentTimeMillis() + "_" + originalFileName;
+                String uploadDir = getServletContext().getRealPath("") + File.separator + "uploads";
+                File dir = new File(uploadDir);
+                if (!dir.exists()) dir.mkdirs();
+                String filePath = uploadDir + File.separator + fileName;
+                filePart.write(filePath);
+                imageUrl = "images/" + fileName;
+            }
+
+            ProductDAO dao = new ProductDAO();
+            ProductDTO oldProduct = dao.getProductById(productId);
+
+            if (oldProduct == null) {
+                request.setAttribute("error", "Product not found.");
+                return "error.jsp";
+            }
+
+            // Nếu không upload ảnh mới thì giữ lại ảnh cũ
+            if (imageUrl == null) {
+                imageUrl = oldProduct.getImageUrl();
+            }
+
+            ProductDTO updated = new ProductDTO(productId, name, brandId, price, stock, description, imageUrl, categoryId);
+            dao.update(updated);
+
+            return handleDisplayProducts(request, response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Update failed: " + e.getMessage());
+            return "error.jsp";
+        }
+}
+
 
     private String handleDelete(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -222,5 +329,50 @@ public class ProductController extends HttpServlet {
         }
         return "home.jsp";
     }
+
+    private String handleShowCreateForm(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            CategoryDAO cdao = new CategoryDAO();
+            List<CategoryDTO> categories = cdao.getAll();
+            request.setAttribute("categories", categories);
+
+            BrandDAO bdao = new BrandDAO();
+            List<BrandDTO> brands = bdao.getAll();
+            request.setAttribute("brands", brands);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "createProduct.jsp";
+    }
+    
+    private String handleShowUpdateForm(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            ProductDAO productDAO = new ProductDAO();
+            ProductDTO product = productDAO.getProductById(productId);
+
+            if (product == null) {
+                request.setAttribute("error", "Không tìm thấy sản phẩm.");
+                return "error.jsp";
+            }
+
+            CategoryDAO categoryDAO = new CategoryDAO();
+            List<CategoryDTO> categories = categoryDAO.getAll();
+            BrandDAO brandDAO = new BrandDAO();
+            List<BrandDTO> brands = brandDAO.getAll();
+
+            request.setAttribute("product", product);
+            request.setAttribute("categories", categories);
+            request.setAttribute("brands", brands);
+
+            return "updateProduct.jsp";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Lỗi khi hiển thị form cập nhật: " + e.getMessage());
+            return "error.jsp";
+        }
+    }
+
 
 }

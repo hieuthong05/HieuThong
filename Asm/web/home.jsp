@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="java.util.List, model.DTO.*, model.DAO.*" %>
+<%@ page import="utils.AuthUtils" %>
 <!DOCTYPE html>
 <html>
 
@@ -23,7 +24,7 @@
     <body>
 
 
-        <!-- ==== HEADER CHUNG ==== -->
+        <!--HEADER CHUNG  -->
         <jsp:include page="header.jsp"/>
 
         <%
@@ -74,6 +75,18 @@
                 <h3 class="section-title">
                     <i class="fa-solid fa-laptop"></i> Sản phẩm nổi bật
                 </h3>
+                <!--create -->
+                <% 
+                    Object user = session.getAttribute("user");
+                    if (user != null && AuthUtils.isAdmin(request)) {
+                %>
+                    <form action="ProductController" method="get">
+                        <input type="hidden" name="action" value="showCreateForm">
+                        <button type="submit" style="padding: 8px 16px; font-weight: bold; background: #4CAF50; color: white; border: none; border-radius: 5px;">
+                            <i class="fa fa-plus"></i> Tạo sản phẩm mới
+                        </button>
+                    </form>
+                <% } %>
 
                 <div class="product-grid">
                     <% for (ProductDTO p : products) { %>
@@ -90,7 +103,7 @@
 
                             <!-- ==== NÚT HÀNH ĐỘNG ==== -->
                             <div class="product-actions">
-                                <!-- 🛒 Thêm giỏ -->
+                                <!-- Thêm giỏ -->
                                 <form action="${pageContext.request.contextPath}/CartController"
                                       method="post" style="display:inline;">
                                     <input type="hidden" name="action"    value="addToCart">
@@ -102,13 +115,29 @@
                                     </button>
                                 </form>
 
-                                <!-- 🔍 Chi tiết -->
+                                <!--Chi tiết -->
                                 <form action="${pageContext.request.contextPath}/MainController"
                                       method="get" style="display:inline;">
                                     <input type="hidden" name="action"    value="viewProductDetails">
                                     <input type="hidden" name="productId" value="<%= p.getProductId() %>">
                                     <button type="submit" class="btn-detail">Chi tiết</button>
                                 </form>
+                                
+                                 <% 
+                                    
+                                    if (user != null && AuthUtils.isAdmin(request)) {
+                                %>
+                                    <form action="ProductController" method="get" style="display:inline;">
+                                        <input type="hidden" name="action" value="showUpdateForm">
+                                        <input type="hidden" name="productId" value="<%= p.getProductId() %>">
+                                        <button type="submit" class="btn-edit"
+                                                style="background: #FFA500; color: white; border: none; padding: 6px 12px; border-radius: 4px; margin-left: 4px;">
+                                            Cập nhật
+                                        </button>
+                                    </form>
+
+                                <% } %>    
+                                    
                             </div>
                         </div>
                     </div>
@@ -121,7 +150,7 @@
             </main>
         </div>
 
-        <!-- ==== FOOTER CHUNG ==== -->
+        <!-- FOOTER CHUNG -->
         <jsp:include page="footer.jsp"/>
 
     </body>

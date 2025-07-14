@@ -1,0 +1,77 @@
+body {
+  background: #232526;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* FORM CHÍNH: Thêm class riêng để tránh ảnh hưởng chung */
+.form-container {
+  width: 400px;
+  margin: 50px auto;
+  background: #200122;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+/* Tiêu đề trong form (khác với header h2) */
+.form-container h2 {
+  text-align: center;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* Input và textarea trong form */
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container input[type="file"],
+.form-container textarea,
+.form-container select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Placeholder & focus */
+.form-container input::placeholder,
+.form-container textarea::placeholder {
+  color: #ddd;
+}
+
+.form-container input:focus,
+.form-container textarea:focus,
+.form-container select:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Submit button riêng trong form */
+.form-container input[type="submit"] {
+  width: 100%;
+  background-color: #f33;
+  color: white;
+  padding: 12px;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-container input[type="submit"]:hover {
+  background-color: #c62828;
+}
