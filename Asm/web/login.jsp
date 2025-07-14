@@ -1,58 +1,50 @@
-<%-- 
-    Document   : login
-    Created on : Jul 8, 2025, 11:50:58 PM
-    Author     : ADMIN
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.DTO.UserDTO"%>
 <%@page import="utils.AuthUtils"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
         <title>Login Page</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/login.css">
     </head>
     <body>
         <%
-            if (AuthUtils.isLoggedIn(request))
-            {
+            if (AuthUtils.isLoggedIn(request)) {
                 response.sendRedirect("home.jsp");
-            }
-            else
-            {
+            } else {
         %>
         
-        <h1>LOGIN</h1>
         
-        <form action="MainController" method="post">
-            <input type="hidden" name="action" value="login"/>
-            <div>
-                <label for="username">Username: </label>
-                <input type="text" name="un"/>
-            </div>
-            
-            <div>
-                <label for="password">Password: </label>
-                <input type="password" name="pw"/>
-            </div>
-            
-            <div>
-                <input type="submit" value="Login"/>
-            </div>
-            
-        </form>
-        
+
+        <!-- LOGIN FORM -->
+        <div class="container">
+            <form action="MainController" method="post" class="form">
+                <div class="title">Welcome,<br><span>Login to continue</span></div>
+                <input type="hidden" name="action" value="login"/>
+
+                <div>
+                    <input type="text" name="un" class="input" placeholder="UserName" required/>
+                </div>
+
+                <div>
+                    <input type="password" name="pw" class="input" placeholder="Password" required/>
+                </div>
+
+                <%
+                    Object obj = request.getAttribute("message");
+                    String message = (obj != null)? ((String)obj):"";
+                %>
+                <span class="title" style="color: red"><%=message%></span>
+                
+                <div>
+                    <input type="submit" value="Login" class="button-confirm"/>
+                </div>
+            </form>     
+        </div>
+
         <%
-            Object obj = request.getAttribute("message");
-            String message = (obj != null)? ((String)obj):"";
-        %>
-        
-        <span style="color: red"><%=message%></span>
-        
-        <%
             }
         %>
-        
     </body>
 </html>

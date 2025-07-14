@@ -31,7 +31,7 @@
 
       <!-- Dropdown profile -->
       <div class="dropdown">
-        <button class="dropbtn"><%= user.getName() %></button>
+        <button class="dropbtn"><i class="fa-solid fa-circle-user"></i></button>
         <div class="dropdown-content">
             <form action="profile.jsp" method="post">
                 <button type="submit">Your Profile</button>
@@ -57,20 +57,3 @@
   </nav>
 </header>
 
-<!-- SEARCH BAR -->
-<div class="search-bar">
-  <form action="${pageContext.request.contextPath}/ProductController"
-        method="get" class="search-form">
-    <input type="hidden" name="action" value="search"/>
-    <div class="search-input-wrapper">
-      <i class="fas fa-search"></i>
-      <input type="text"
-             name="keyword"
-             placeholder="Tìm kiếm sản phẩm..."
-             value="<%= request.getAttribute("keyword") != null 
-                       ? request.getAttribute("keyword") 
-                       : "" %>"
-             required/>
-    </div>
-  </form>
-</div>

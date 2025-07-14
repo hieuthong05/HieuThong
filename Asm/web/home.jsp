@@ -38,6 +38,25 @@
     List<BrandDTO> brands = (List<BrandDTO>) request.getAttribute("brands");
     if (brands==null) brands = new BrandDAO().getAll();
   %>
+  
+  <!-- SEARCH BAR -->
+<div class="search-bar">
+  <form action="${pageContext.request.contextPath}/ProductController"
+        method="get" class="search-form">
+    <input type="hidden" name="action" value="search"/>
+    <div class="search-input-wrapper">
+      <i class="fas fa-search"></i>
+      <input type="text"
+             name="keyword"
+             placeholder="Tìm kiếm sản phẩm..."
+             value="<%= request.getAttribute("keyword") != null 
+                       ? request.getAttribute("keyword") 
+                       : "" %>"
+             required/>
+    </div>
+  </form>
+</div>
+
 
   <div class="main-layout">
     <div class="sidebar">

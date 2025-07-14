@@ -141,8 +141,8 @@ public class UserController extends HttpServlet {
 
     private String handleRegister(HttpServletRequest request, HttpServletResponse response)
     {
+        HttpSession session = request.getSession();
         String errorMessage = "";
-        String message = "";
         
         String userName = request.getParameter("userName");
         String fullName = request.getParameter("fullName");
@@ -190,11 +190,16 @@ public class UserController extends HttpServlet {
         }
         if (errorMessage.isEmpty())
         {
-            message = "Sign Up Successfully. ^^";
+            request.setAttribute("message", "Sign Up Successfully. ^^");
+            UserDTO user = udao.getUserByUsername(userName);
+            session.setAttribute("user", user);
+            return HOME_PAGE;
         }
-        request.setAttribute("errorMessage", errorMessage);
-        request.setAttribute("message", message);
-        return "registerForm.jsp";
+        else
+        {
+            request.setAttribute("errorMessage", errorMessage);
+            return "registerForm.jsp";
+        }
     }
 
     private String handleEditProfile(HttpServletRequest request, HttpServletResponse response)
