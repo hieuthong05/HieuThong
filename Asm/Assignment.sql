@@ -302,7 +302,7 @@ UPDATE Product SET imageUrl = 'images/Dell_Vostro_3888_MT.jpg' WHERE productId =
 UPDATE Product SET imageUrl = 'images/HP_Pavilion_Gaming_TG01.jpg' WHERE productId = 17;
 
 -- Monitor
-UPDATE Product SET imageUrl = 'images/LG_UltraGear_27GP850-B_27.jpg' WHERE productId = 18;
+UPDATE Product SET imageUrl = 'images/LG_UltraGear_27GP850_B_27.jpg' WHERE productId = 18;
 UPDATE Product SET imageUrl = 'images/Dell_S2721HN_27.jpg' WHERE productId = 19;
 
 -- Accessories
