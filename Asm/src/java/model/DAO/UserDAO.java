@@ -3,6 +3,8 @@ package model.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import model.DTO.UserDTO;
 import utils.DbUtils;
 
@@ -12,7 +14,8 @@ import utils.DbUtils;
  */
 public class UserDAO {
     
-     private static final String GET_USER_BY_USERNAME = "SELECT userId, userName, name, email, password, role, createdAt FROM Users WHERE userName = ?";
+     private static final String GET_ALL_USER = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE role = 'customer'";
+     private static final String GET_USER_BY_USERNAME = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE userName = ? AND isActive = 1";
      private static final String CREATE_USER = "INSERT INTO Users (userName, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
      
      public UserDTO getUserByUsername(String username)
@@ -39,6 +42,7 @@ public class UserDAO {
                 user.setPassword(rs.getString("password"));
                 user.setRole(rs.getString("role"));
                 user.setCreatedAt(rs.getDate("createdAt").toLocalDate());
+                user.setIsActive(rs.getBoolean("isActive"));
             }    
         }
         catch (Exception e) {
@@ -94,6 +98,42 @@ public class UserDAO {
              closeResources(conn, ps, null);
          }
          return success;
+     }
+     
+     public List<UserDTO> getAllUser()
+     {
+         List<UserDTO> list = new ArrayList<>();
+         Connection conn = null;
+         PreparedStatement ps = null;
+         ResultSet rs = null;
+         try
+         {
+            conn = DbUtils.getConnection();
+            ps = conn.prepareStatement(GET_ALL_USER);
+            rs = ps.executeQuery();
+             
+            while (rs.next())
+            {
+                UserDTO user = new UserDTO();
+                user.setUserId(rs.getString("userId"));
+                user.setUserName(rs.getString("userName"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+                user.setCreatedAt(rs.getDate("createdAt").toLocalDate());
+                user.setIsActive(rs.getBoolean("isActive"));
+                
+                list.add(user);
+            }
+         }
+         catch (Exception e) {
+             System.err.println("Error in getAllUser(): " + e.getMessage());
+             e.printStackTrace();
+         } finally {
+             closeResources(conn, ps, rs);
+         }
+         return list;
      }
      
      private void closeResources(Connection conn, PreparedStatement ps, ResultSet rs)

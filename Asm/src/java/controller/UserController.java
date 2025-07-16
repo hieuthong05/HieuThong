@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import model.DAO.UserDAO;
 import model.DTO.UserDTO;
 import utils.AuthUtils;
@@ -48,6 +49,14 @@ public class UserController extends HttpServlet {
             else if (action.equals("register"))
             {
                 url = handleRegister(request, response);
+            }
+            else if (action.equals("editProfile"))
+            {
+                url = handleEditProfile(request, response);
+            }
+            else if (action.equals("manageUser"))
+            {
+                url = handleManageUser(request, response);
             }
             
             
@@ -137,8 +146,8 @@ public class UserController extends HttpServlet {
 
     private String handleRegister(HttpServletRequest request, HttpServletResponse response)
     {
+        HttpSession session = request.getSession();
         String errorMessage = "";
-        String message = "";
         
         String userName = request.getParameter("userName");
         String fullName = request.getParameter("fullName");
@@ -186,11 +195,47 @@ public class UserController extends HttpServlet {
         }
         if (errorMessage.isEmpty())
         {
-            message = "Sign Up Successfully. ^^";
+            request.setAttribute("message", "Sign Up Successfully. ^^");
+            UserDTO user = udao.getUserByUsername(userName);
+            session.setAttribute("user", user);
+            return HOME_PAGE;
         }
-        request.setAttribute("errorMessage", errorMessage);
-        request.setAttribute("message", message);
-        return "registerForm.jsp";
+        else
+        {
+            request.setAttribute("errorMessage", errorMessage);
+            return "registerForm.jsp";
+        }
     }
+
+    private String handleEditProfile(HttpServletRequest request, HttpServletResponse response)
+    {
+        String curUserName = request.getParameter("curUserName");
+        UserDTO us = udao.getUserByUsername(curUserName);
+        if (us != null)
+        {
+            request.setAttribute("us", us);
+            request.setAttribute("isEdit", true);
+            return "registerForm.jsp";
+        }
+        else
+        {
+            request.setAttribute("errorMessage", "Not Exists User!");
+            request.setAttribute("isEdit", true);
+            return "registerForm.jsp";
+        }
+    }
+
+    private String handleManageUser(HttpServletRequest request, HttpServletResponse response)
+    {
+        if (AuthUtils.isAdmin(request))
+        {
+            List<UserDTO> list = udao.getAllUser();
+            request.setAttribute("list", list);
+            return "manageUser.jsp";
+        }
+        return "home.jsp";
+    }
+    
+    
 
 }

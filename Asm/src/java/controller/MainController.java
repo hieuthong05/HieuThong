@@ -23,7 +23,9 @@ public class MainController extends HttpServlet {
     private boolean isUserAction(String action) {
         return "login".equals(action)
             || "logout".equals(action)
-            || "register".equals(action);
+            || "register".equals(action)
+            || "editProfile".equals(action)
+            || "manageUser".equals(action);
     }
 
     /*** Xác định các action liên quan đến sản phẩm và danh mục ***/
