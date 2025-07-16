@@ -135,7 +135,7 @@
 
                                 <!--Chi tiết -->
                                 <form action="${pageContext.request.contextPath}/MainController"
-                                      method="get" style="display:inline;">
+                                      method="post" style="display:inline;">
                                     <input type="hidden" name="action"    value="viewProductDetails">
                                     <input type="hidden" name="productId" value="<%= p.getProductId() %>">
                                     <button type="submit" class="btn-detail">Chi tiết</button>

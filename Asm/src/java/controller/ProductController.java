@@ -16,9 +16,11 @@ import java.util.List;
 import model.DAO.BrandDAO;
 import model.DAO.CategoryDAO;
 import model.DAO.ProductDAO;
+import model.DAO.ReviewDAO;
 import model.DTO.BrandDTO;
 import model.DTO.CategoryDTO;
 import model.DTO.ProductDTO;
+import model.DTO.ReviewDTO;
 import utils.AuthUtils;
 
 @MultipartConfig
@@ -128,13 +130,18 @@ public class ProductController extends HttpServlet {
 
     private String handleViewProductDetails(HttpServletRequest request, HttpServletResponse response) {
         try {
-            int productId = Integer.parseInt(request.getParameter("productId"));
+            
+            String proId = request.getParameter("productId");
+            int productId = Integer.parseInt(proId);
 
             ProductDAO productDAO = new ProductDAO();
             ProductDTO product = productDAO.getProductById(productId); 
+            ReviewDAO rdao = new ReviewDAO();
+            List<ReviewDTO> list = rdao.getReviewByProductId(proId);
 
             if (product != null) {
                 request.setAttribute("product", product); 
+                request.setAttribute("list", list);
                 return "productDetails.jsp"; 
             } else {
                 request.setAttribute("error", "Product not found!");

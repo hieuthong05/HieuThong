@@ -23,7 +23,7 @@
         <%
             if (!AuthUtils.isLoggedIn(request))
             {
-                response.sendRedirect("login.jsp");
+                response.sendRedirect("error.jsp");
             }
             else
             {

@@ -3,6 +3,8 @@
 <%@page import="model.DTO.UserDTO" %>
 <%@page import="java.text.DecimalFormatSymbols" %>
 <%@page import="java.text.DecimalFormat" %>
+<%@page import="java.util.List" %>
+<%@page import="model.DTO.ReviewDTO" %>
 <%
     
     DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -11,6 +13,7 @@
     
     ProductDTO product = (ProductDTO) request.getAttribute("product");
     UserDTO user = (UserDTO) session.getAttribute("user");
+    List<ReviewDTO> list = (List<ReviewDTO>) request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -56,6 +59,31 @@
                 </form>
             </div>
         </div>
+        <div class="product-comment">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User Id</th>
+                        <th>Rate</th>
+                        <th>Comment</th>
+                        <th>Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        for(ReviewDTO u:list)
+                        {
+                    %><tr>
+                        <td><%= u.getUserId()%></td>
+                        <td><%= u.getRating()%></td>
+                        <td><%= u.getComment()%></td>
+                        <td><%= u.getCreatedAt()%></td>
+                      </tr><%
+                        }
+                    %>
+                </tbody>
+               </table>
+        </div>   
     </div>
 
 <% } else { %>
