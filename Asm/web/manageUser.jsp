@@ -26,21 +26,29 @@
         <div class="card">
             <div class="card__title">User ID: <%= u.getUserId() %></div>
             <div class="card__data">
-                <div class="card__right">
-                    <div class="item">Username</div>
-                    <div class="item">Full Name</div>
-                    <div class="item">Email</div>
-                    <div class="item">Role</div>
-                    <div class="item">Created</div>
-                    <div class="item">Status</div>
+                <div class="card__row">
+                    <div class="label">Username</div>
+                    <div class="value"><%= u.getUserName() %></div>
                 </div>
-                <div class="card__left">
-                    <div class="item"><%= u.getUserName() %></div>
-                    <div class="item"><%= u.getName() %></div>
-                    <div class="item"><%= u.getEmail() %></div>
-                    <div class="item"><%= u.getRole() %></div>
-                    <div class="item"><%= u.getCreatedAt() %></div>
-                    <div class="item"><%= u.isIsActive() ? "Active" : "Deleted/Banned" %></div>
+                <div class="card__row">
+                    <div class="label">Full Name</div>
+                    <div class="value"><%= u.getName() %></div>
+                </div>
+                <div class="card__row">
+                    <div class="label">Email</div>
+                    <div class="value"><%= u.getEmail() %></div>
+                </div>
+                <div class="card__row">
+                    <div class="label">Role</div>
+                    <div class="value"><%= u.getRole() %></div>
+                </div>
+                <div class="card__row">
+                    <div class="label">Created</div>
+                    <div class="value"><%= u.getCreatedAt() %></div>
+                </div>
+                <div class="card__row">
+                    <div class="label">Status</div>
+                    <div class="value"><%= u.isIsActive() ? "Active" : "Deleted/Banned" %></div>
                 </div>
             </div>
         </div>
