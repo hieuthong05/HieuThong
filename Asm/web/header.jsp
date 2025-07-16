@@ -30,20 +30,35 @@
       <a href="${pageContext.request.contextPath}/registerForm.jsp">Đăng ký</a>
       <a href="${pageContext.request.contextPath}/login.jsp">Đăng nhập</a>
     <% } else { %>
+        <%
+            if (AuthUtils.isAdmin(request))
+            {
+            %> <form action="${pageContext.request.contextPath}/MainController"
+                    method="post" style="display:inline;">
+                    <input type="hidden" name="action" value="manageUser"/>
+                    <input type="submit" value="Manage User"/>
+              </form> <%
+            }
+        %>
+
       <span class="welcome">Xin chào, <%= user.getName() %></span>
-      <!-- logout -->
-      <form action="${pageContext.request.contextPath}/MainController"
-            method="post" style="display:inline;">
-        <input type="hidden" name="action" value="logout"/>
-        <input type="submit" value="Đăng xuất"/>
-      </form>
+      
       <!-- profile dropdown -->
       <div class="dropdown">
-        <button class="dropbtn"><%= user.getName() %></button>
+        <button class="dropbtn"><i class="fa-solid fa-circle-user"></i></button>
         <div class="dropdown-content">
+        <form action="profile.jsp" method="post">
+             <button type="submit">Your Profile</button>
+        </form>
+
           <button form="profileForm" name="action" value="UpdateProfile">
             Cập nhật thông tin
           </button>
+            <!-- logout -->
+        <form action="${pageContext.request.contextPath}/MainController" method="post">
+          <input type="hidden" name="action" value="logout"/>
+          <input type="submit" value="Đăng xuất"/>
+        </form>
           <button form="profileForm" name="action" value="DeleteAccount">
             Xóa tài khoản
           </button>
@@ -59,22 +74,7 @@
   </nav>
 </header>
 
-<div class="search-bar">
-  <form action="${pageContext.request.contextPath}/ProductController"
-        method="get" class="search-form">
-    <input type="hidden" name="action" value="search"/>
-    <div class="search-input-wrapper">
-      <i class="fas fa-search"></i>
-      <input type="text"
-             name="keyword"
-             placeholder="Tìm kiếm sản phẩm..."
-             value="<%= request.getAttribute("keyword") != null 
-                       ? request.getAttribute("keyword") 
-                       : "" %>"
-             required/>
-    </div>
-  </form>
-</div>
+
 <%
     String cartMsg = (String) session.getAttribute("cartMessage");
     if (cartMsg != null) {     

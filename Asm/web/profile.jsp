@@ -32,7 +32,7 @@
                    : null;
         %>
         
-        <h1><%= user.getName()%></h1>
+        <div><i class="fa-regular fa-face-smile"></i><h1><%= user.getName()%></h1></div>
         <h2>UserName: <%= user.getUserName()%></h2>
         <h2>Email: <%= user.getEmail()%></h2>
         <h2>Role: <%= user.getRole()%></h2>
