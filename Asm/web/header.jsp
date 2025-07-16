@@ -22,12 +22,16 @@
       <a href="${pageContext.request.contextPath}/login.jsp">Đăng nhập</a>
     <% } else { %>
       <span class="welcome">Xin chào, <%= user.getName() %></span>
-      <!-- Logout form -->
-      <form action="${pageContext.request.contextPath}/MainController"
-            method="post" style="display:inline;">
-        <input type="hidden" name="action" value="logout"/>
-        <input type="submit" value="Đăng xuất"/>
-      </form>
+     <%
+         if (AuthUtils.isAdmin(request))
+         {
+        %>  <form action="${pageContext.request.contextPath}/MainController"
+              method="post" style="display:inline;">
+                 <input type="hidden" name="action" value="manageUser"/>
+                 <input type="submit" value="User List"/>
+            </form> <%    
+         }
+     %>
 
       <!-- Dropdown profile -->
       <div class="dropdown">
@@ -41,6 +45,12 @@
                 <input type="hidden" name="curUserName" value="<%= user.getUserName()%>"/>
                 <button type="submit">Update Profile</button>
             </form>
+             <!-- Logout form -->
+            <form action="${pageContext.request.contextPath}/MainController"
+                  method="post" style="display:inline;">
+              <input type="hidden" name="action" value="logout"/>
+              <input type="submit" value="Đăng xuất"/>
+            </form>    
           <button form="profileForm" name="action" value="DeleteAccount">
             Xóa tài khoản
           </button>

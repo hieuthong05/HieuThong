@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import model.DAO.UserDAO;
 import model.DTO.UserDTO;
 import utils.AuthUtils;
@@ -52,6 +53,10 @@ public class UserController extends HttpServlet {
             else if (action.equals("editProfile"))
             {
                 url = handleEditProfile(request, response);
+            }
+            else if (action.equals("manageUser"))
+            {
+                url = handleManageUser(request, response);
             }
             
             
@@ -219,5 +224,18 @@ public class UserController extends HttpServlet {
             return "registerForm.jsp";
         }
     }
+
+    private String handleManageUser(HttpServletRequest request, HttpServletResponse response)
+    {
+        if (AuthUtils.isAdmin(request))
+        {
+            List<UserDTO> list = udao.getAllUser();
+            request.setAttribute("list", list);
+            return "manageUser.jsp";
+        }
+        return "home.jsp";
+    }
+    
+    
 
 }

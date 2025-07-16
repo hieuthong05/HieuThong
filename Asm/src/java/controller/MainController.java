@@ -24,7 +24,8 @@ public class MainController extends HttpServlet {
         return "login".equals(action)
             || "logout".equals(action)
             || "register".equals(action)
-            || "editProfile".equals(action);
+            || "editProfile".equals(action)
+            || "manageUser".equals(action);
     }
 
     /*** Xác định các action liên quan đến sản phẩm và danh mục ***/
