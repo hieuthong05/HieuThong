@@ -128,7 +128,7 @@ public class UserController extends HttpServlet {
        else
        {
            url = LOGIN_PAGE;
-           request.setAttribute("message", "Username or Password Incorrect! ^^");
+           request.setAttribute("message", "Username/Email or Password Incorrect! ^^");
        }
        
        return url;

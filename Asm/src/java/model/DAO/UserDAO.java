@@ -15,7 +15,7 @@ import utils.DbUtils;
 public class UserDAO {
     
      private static final String GET_ALL_USER = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE role = 'customer'";
-     private static final String GET_USER_BY_USERNAME = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE userName = ? AND isActive = 1";
+     private static final String GET_USER_BY_USERNAME = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE (userName COLLATE Latin1_General_CS_AS = ? OR email COLLATE Latin1_General_CS_AS = ?) AND isActive = 1";
      private static final String CREATE_USER = "INSERT INTO Users (userName, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
      
      public UserDTO getUserByUsername(String username)
@@ -30,6 +30,7 @@ public class UserDAO {
             conn = DbUtils.getConnection();
             ps = conn.prepareStatement(GET_USER_BY_USERNAME);
             ps.setString(1, username);
+            ps.setString(2, username);
             rs = ps.executeQuery();
             
             if (rs.next())

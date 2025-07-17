@@ -60,7 +60,7 @@
             <!-- logout -->
         <form action="${pageContext.request.contextPath}/MainController" method="post">
           <input type="hidden" name="action" value="logout"/>
-          <input type="submit" value="Đăng xuất"/>
+          <button type="submit">Logout</button>
         </form>
           <button form="profileForm" name="action" value="DeleteAccount">
             Xóa tài khoản

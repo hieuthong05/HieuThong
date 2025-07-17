@@ -24,7 +24,7 @@
                 <input type="hidden" name="action" value="login"/>
 
                 <div>
-                    <input type="text" name="un" class="input" placeholder="UserName" required/>
+                    <input type="text" name="un" class="input" placeholder="UserName/Email" required/>
                 </div>
 
                 <div>
