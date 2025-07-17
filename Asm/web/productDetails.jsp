@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
     <link rel="stylesheet" href="${pageContext.request.contextPath}//assets/css/header.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}//assets/css/productDetails.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}//assets/css/review.css">
 </head>
 <body>
 
@@ -59,31 +60,53 @@
                 </form>
             </div>
         </div>
-        <div class="product-comment">
-            <table>
-                <thead>
-                    <tr>
-                        <th>User Id</th>
-                        <th>Rate</th>
-                        <th>Comment</th>
-                        <th>Created At</th>
-                    </tr>
-                </thead>
-                <tbody>
+         <div class="product-comment">
+        <%
+            if (list == null || list.isEmpty()) {
+        %>
+            <span style="color: red"><h1>Have No Reviews!</h1></span>
+        <%
+            } else {
+        %>
+        <div class="review-container">
+            <%
+                for (ReviewDTO u : list) {
+            %>
+            <div class="card">
+                <div class="stars">
                     <%
-                        for(ReviewDTO u:list)
-                        {
-                    %><tr>
-                        <td><%= u.getUserId()%></td>
-                        <td><%= u.getRating()%></td>
-                        <td><%= u.getComment()%></td>
-                        <td><%= u.getCreatedAt()%></td>
-                      </tr><%
+                        String rating = u.getRating();
+                        for (int i = 1; i <= 5; i++) {
+                    %>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="star">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                    <%
                         }
                     %>
-                </tbody>
-               </table>
-        </div>   
+                </div>
+
+                <div class="infos">
+                    <p class="date-time">
+                        <%= u.getCreatedAt() %>
+                    </p>
+                    <p class="description">
+                        <%= u.getComment() %>
+                    </p>
+                </div>
+
+                <div class="author">
+                    — User ID: <%= u.getUserId() %>
+                </div>
+            </div>
+            <%
+                }
+            %>
+        </div>
+        <%
+            }
+        %>
+    </div>   
     </div>
 
 <% } else { %>

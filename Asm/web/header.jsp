@@ -45,7 +45,7 @@
       
       <!-- profile dropdown -->
       <div class="dropdown">
-        <button class="dropbtn"><i class="fa-solid fa-circle-user"></i></button>
+          <button class="dropbtn" title="Account"><i class="fa-solid fa-circle-user"></i></button>
         <div class="dropdown-content">
         <form action="profile.jsp" method="post">
              <button type="submit">Your Profile</button>
