@@ -50,10 +50,13 @@
         <form action="profile.jsp" method="post">
              <button type="submit">Your Profile</button>
         </form>
-
-          <button form="profileForm" name="action" value="UpdateProfile">
-            Cập nhật thông tin
-          </button>
+        <form action="MainController" method="post">
+            <input type="hidden" name="action" value="editProfile"/>
+            <input type="hidden" name="curUserName" value="<%= user.getUserName()%>"/>
+            <button type="submit">
+              Edit Profile
+            </button>
+        </form>
             <!-- logout -->
         <form action="${pageContext.request.contextPath}/MainController" method="post">
           <input type="hidden" name="action" value="logout"/>
