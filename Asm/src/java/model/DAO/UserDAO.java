@@ -17,6 +17,7 @@ public class UserDAO {
      private static final String GET_ALL_USER = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE role = 'customer'";
      private static final String GET_USER_BY_USERNAME = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE (userName COLLATE Latin1_General_CS_AS = ? OR email COLLATE Latin1_General_CS_AS = ?) AND isActive = 1";
      private static final String CREATE_USER = "INSERT INTO Users (userName, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
+     private static final String UPDATE_USER = "UPDATE Users SET userName = ?, name = ?, email = ?, password = ? WHERE userId COLLATE Latin1_General_CS_AS = ?";
      
      public UserDTO getUserByUsername(String username)
     {
@@ -135,6 +136,34 @@ public class UserDAO {
              closeResources(conn, ps, rs);
          }
          return list;
+     }
+     
+     public boolean update(UserDTO user)
+     {
+        boolean success = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+         try
+         {
+             conn = DbUtils.getConnection();
+             ps = conn.prepareStatement(UPDATE_USER);
+             ps.setString(1, user.getUserName());
+             ps.setString(2, user.getName());
+             ps.setString(3, user.getEmail());
+             ps.setString(4, user.getPassword());
+             ps.setString(5, user.getUserId());
+             
+             int rowsAffected = ps.executeUpdate();
+             success = (rowsAffected > 0);
+         }
+         catch (Exception e) {
+             System.err.println("Error in update(user): " + e.getMessage());
+             e.printStackTrace();
+         } finally {
+             closeResources(conn, ps, null);
+         }
+         return success;
      }
      
      private void closeResources(Connection conn, PreparedStatement ps, ResultSet rs)
