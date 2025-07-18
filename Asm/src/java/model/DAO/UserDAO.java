@@ -17,7 +17,7 @@ public class UserDAO {
      private static final String GET_ALL_USER = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE role = 'customer'";
      private static final String GET_USER_BY_USERNAME = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE (userName COLLATE Latin1_General_CS_AS = ? OR email COLLATE Latin1_General_CS_AS = ?) AND isActive = 1";
      private static final String CREATE_USER = "INSERT INTO Users (userName, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
-     private static final String UPDATE_USER = "UPDATE Users SET userName = ?, name = ?, email = ?, password = ? WHERE userId COLLATE Latin1_General_CS_AS = ?";
+     private static final String UPDATE_USER = "UPDATE Users SET userName = ?, name = ?, email = ?, password = ? WHERE userId = ?";
      
      public UserDTO getUserByUsername(String username)
     {

@@ -62,6 +62,14 @@ public class UserDTO {
         this.password = password;
         this.role = "customer";
     }
+    
+    public UserDTO(String userId, String userName, String name, String email, String password) {
+        this.userId = userId;
+        this.userName = userName;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     public UserDTO(String userName, String name, String email, String password, String role, boolean isActive) {
         this.userName = userName;

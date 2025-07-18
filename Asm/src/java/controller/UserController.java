@@ -58,6 +58,10 @@ public class UserController extends HttpServlet {
             {
                 url = handleManageUser(request, response);
             }
+            else if (action.equals("updateProfile"))
+            {
+                url = handleUpdate(request, response);
+            }
             
             
         } catch (Exception e) {
@@ -234,6 +238,73 @@ public class UserController extends HttpServlet {
             return "manageUser.jsp";
         }
         return "home.jsp";
+    }
+
+    private String handleUpdate(HttpServletRequest request, HttpServletResponse response)
+    {
+        if (AuthUtils.isLoggedIn(request))
+        {
+            HttpSession session = request.getSession();
+            String errorMessage = "";
+
+            String userId = request.getParameter("userId");
+            String userName = request.getParameter("userName");
+            String fullName = request.getParameter("fullName");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String cfPassword = request.getParameter("cfPassword");
+
+            UserDTO us = new UserDTO(userId, userName, fullName, email, password);
+            request.setAttribute("us", us);
+
+            if (udao.isUserExists(userName))
+            {
+                errorMessage = "<br/> User Name is already exists!";
+            }
+            if (userName == null || userName.trim().isEmpty())
+            {
+                errorMessage += "<br/> Username Must Be NON-EMPTY!";
+            }
+            if (fullName == null || fullName.trim().isEmpty())
+            {
+                errorMessage += "<br/> Full Name Must Be NON-EMPTY!";
+            }
+            if (email == null || email.trim().isEmpty())
+            {
+                errorMessage += "<br/> Email Must Be NON-EMPTY!";
+            }
+            if (password == null || password.trim().isEmpty())
+            {
+                errorMessage += "<br/> Password Must Be NON-EMPTY!";
+            }
+            if (cfPassword == null || cfPassword.trim().isEmpty())
+            {
+                errorMessage += "<br/> Confirm Password Must Be NON-EMPTY!";
+            }    
+            if (!password.equals(cfPassword))
+            {
+                errorMessage += "<br/> Fail Confirm Password (Not Match)!";
+            }
+            if (errorMessage.isEmpty())
+            {
+                if (udao.update(us))
+                {
+                    request.setAttribute("message", "Update Profile Successfully. ^^");
+                    UserDTO user = udao.getUserByUsername(userName);
+                    session.setAttribute("user", user);
+                    return "profile.jsp";
+                }
+            }
+               errorMessage += "<br/> Can not Update Profile! ^^";
+               request.setAttribute("isEdit", true);
+               request.setAttribute("errorMessage", errorMessage);
+               return "registerForm.jsp";
+        }
+        else
+        {
+            request.setAttribute("errorMessage", "NOT ALLOW UPDATE!!");
+            return "error.jsp";
+        }
     }
     
     

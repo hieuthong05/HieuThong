@@ -30,6 +30,7 @@
                 UserDTO user = AuthUtils.isLoggedIn(request)
                    ? AuthUtils.getCurrentUser(request)
                    : null;
+                   String message = (String) request.getAttribute("message");
         %>
         
         <div><i class="fa-regular fa-face-smile"></i><h1><%= user.getName()%></h1></div>
@@ -38,7 +39,7 @@
         <h2>Role: <%= user.getRole()%></h2>
         <h2>Create At: <%= user.getCreatedAt()%></h2>
         <h2>Status:  <%=user.isIsActive() ? "Active" : "Inactive"%></h2>
-        
+        <h3><%= (message != null)? message:""%></h3>
         <form>
             
         </form>

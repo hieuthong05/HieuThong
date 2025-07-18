@@ -18,7 +18,7 @@
     <form action="MainController" method="post" class="form">
         <p class="title"><%= isEdit ? "Update Profile" : "Sign Up" %></p>
         <input type="hidden" name="action" value="<%= isEdit ? "updateProfile" : "register" %>"/>
-
+        <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
         <label>
             <input class="input" type="text" name="userName" required value="<%= (user != null) ? user.getUserName() : "" %>">
             <span>User Name *</span>
