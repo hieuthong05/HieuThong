@@ -62,9 +62,14 @@
           <input type="hidden" name="action" value="logout"/>
           <button type="submit">Logout</button>
         </form>
-          <button form="profileForm" name="action" value="DeleteAccount">
-            Xóa tài khoản
-          </button>
+          
+        <form action="MainController" method="post">
+            <input type="hidden" name="action" value="deleteUser"/>
+            <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
+            <button type="submit" onclick="return confirm('Are You Sure About That!^^')">
+              Delete Account
+            </button>
+        </form>
         </div>
       </div>
       <!-- My Orders -->

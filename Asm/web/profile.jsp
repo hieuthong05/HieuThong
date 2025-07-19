@@ -40,8 +40,12 @@
         <h2>Create At: <%= user.getCreatedAt()%></h2>
         <h2>Status:  <%=user.isIsActive() ? "Active" : "Inactive"%></h2>
         <h3><%= (message != null)? message:""%></h3>
-        <form>
-            
+        <form action="MainController" method="post">
+            <input type="hidden" name="action" value="editProfile"/>
+            <input type="hidden" name="curUserName" value="<%= user.getUserName()%>"/>
+            <button type="submit">
+              Edit Profile
+            </button>
         </form>
         <%
             }
