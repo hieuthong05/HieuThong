@@ -18,6 +18,7 @@ public class UserDAO {
      private static final String GET_USER_BY_USERNAME = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE (userName COLLATE Latin1_General_CS_AS = ? OR email COLLATE Latin1_General_CS_AS = ?) AND isActive = 1";
      private static final String CREATE_USER = "INSERT INTO Users (userName, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
      private static final String UPDATE_USER = "UPDATE Users SET userName = ?, name = ?, email = ?, password = ? WHERE userId = ?";
+     private static final String DELETE_USER = "DELETE FROM Users WHERE userId = ?";
      
      public UserDTO getUserByUsername(String username)
     {
@@ -159,6 +160,30 @@ public class UserDAO {
          }
          catch (Exception e) {
              System.err.println("Error in update(user): " + e.getMessage());
+             e.printStackTrace();
+         } finally {
+             closeResources(conn, ps, null);
+         }
+         return success;
+     }
+     
+     public boolean delete(String userId)
+     {
+         boolean success = false;
+         Connection conn = null;
+         PreparedStatement ps = null;
+         
+         try
+         {
+             conn = DbUtils.getConnection();
+             ps = conn.prepareStatement(DELETE_USER);
+             ps.setString(1, userId);
+             
+             int rowsAffected = ps.executeUpdate();
+             success = (rowsAffected > 0);
+         }
+         catch (Exception e) {
+             System.err.println("Error in  delete(userId): " + e.getMessage());
              e.printStackTrace();
          } finally {
              closeResources(conn, ps, null);

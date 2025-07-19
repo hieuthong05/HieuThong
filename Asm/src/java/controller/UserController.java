@@ -62,6 +62,10 @@ public class UserController extends HttpServlet {
             {
                 url = handleUpdate(request, response);
             }
+            else if (action.equals("deleteUser"))
+            {
+                url = handleDelete(request, response);
+            }
             
             
         } catch (Exception e) {
@@ -303,6 +307,31 @@ public class UserController extends HttpServlet {
         else
         {
             request.setAttribute("errorMessage", "NOT ALLOW UPDATE!!");
+            return "error.jsp";
+        }
+    }
+
+    private String handleDelete(HttpServletRequest request, HttpServletResponse response)
+    {
+        HttpSession session = request.getSession();
+        if (AuthUtils.isLoggedIn(request))
+        {
+            String userId = request.getParameter("userId");
+            if (udao.delete(userId))
+            {
+                session.invalidate();
+                request.setAttribute("message", "Delete Account Successfully!");
+                return HOME_PAGE;
+            }
+            else
+            {
+                request.setAttribute("errorMessage", "FAIL TO DELETE ACCOUNT!");
+                return "error.jsp";
+            }
+        }
+        else
+        {
+            request.setAttribute("errorMessage", "NOT ALLOW DELETE!!");
             return "error.jsp";
         }
     }

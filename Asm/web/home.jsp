@@ -40,6 +40,8 @@
           List<BrandDTO> brands =
                   (List<BrandDTO>) request.getAttribute("brands");
           if (brands == null) brands = new BrandDAO().getAll();
+          
+          String message = (String) request.getAttribute("message");
         %>
         
         <!-- ===== SEARCH ===== -->
@@ -59,6 +61,8 @@
           </div>
         </form>
       </div>
+                   
+                   <div><p style="color: green"><%= (message!=null)?message:""%></p></div>
                    
         <div class="main-layout">
             <!-- ===== SIDEBAR ===== -->
