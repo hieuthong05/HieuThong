@@ -29,6 +29,10 @@ public class MainController extends HttpServlet {
             || "updateProfile".equals(action)
             || "deleteUser".equals(action);
     }
+    
+    private boolean isReviewAction(String action) {
+        return "createReview".equals(action);
+    }
 
     /*** Xác định các action liên quan đến sản phẩm và danh mục ***/
     private boolean isProductAction(String action) {
@@ -98,6 +102,10 @@ public class MainController extends HttpServlet {
             }
             else if (isPaymentAction(action)) {
                 url = "/PaymentController";
+            }
+            else if (isReviewAction(action))
+            {
+                url = "/ReviewController";
             }
 
             //------------------ CART HANDLERS ------------------

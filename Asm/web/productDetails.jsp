@@ -58,6 +58,13 @@
                         <i class="fas fa-credit-card"></i> Mua ngay
                     </button>
                 </form>
+                    
+                
+                <form action="createReview.jsp" method="post">
+                    <input type="hidden" name="productId" value="<%= (product!=null)?product.getProductId():""%>"/>
+                    <button type="submit">Comment</button>
+                </form>
+                   
             </div>
         </div>
          <div class="product-comment">
@@ -98,10 +105,16 @@
                 <div class="author">
                     — User ID: <%= u.getUserId() %>
                 </div>
+                <div>
+                    <form action="createReview.jsp" method="post">
+                        <button type="submit">Edit Review</button>
+                    </form>
+                </div>
             </div>
             <%
                 }
             %>
+            
         </div>
         <%
             }

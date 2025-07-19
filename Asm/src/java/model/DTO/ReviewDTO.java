@@ -38,6 +38,14 @@ public class ReviewDTO {
         this.status = status;
     }
 
+    public ReviewDTO(String userId, String productId, String rating, String comment) {
+        this.userId = userId;
+        this.productId = productId;
+        this.rating = rating;
+        this.comment = comment;
+        this.status = true;
+    }
+
     public String getReviewId() {
         return reviewId;
     }
