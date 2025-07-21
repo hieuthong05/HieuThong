@@ -46,6 +46,10 @@ public class ReviewController extends HttpServlet {
             {
                 url = handleUpdate(request, response);
             }
+            else if (action.equals("deleteReview"))
+            {
+                url = handleDelete(request, response);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error Process Review Request: " + e.getMessage());
@@ -228,6 +232,26 @@ public class ReviewController extends HttpServlet {
         else
         {
             request.setAttribute("errorMessage", "NOT ALLOW UPDATE REVIEW!!");
+            return "error.jsp";
+        }
+    }
+
+    private String handleDelete(HttpServletRequest request, HttpServletResponse response)
+    {
+        if (AuthUtils.isLoggedIn(request))
+        {
+            String reviewId = request.getParameter("reviewId");
+            boolean check = rdao.updateReviewStatus(reviewId, false);
+            
+                request.setAttribute("message", "Delete Review Successfully. ^^");
+                return "home.jsp";
+            
+            
+            
+        }
+        else
+        {
+            request.setAttribute("errorMessage", "NOT ALLOW DELETE REVIEW!!");
             return "error.jsp";
         }
     }

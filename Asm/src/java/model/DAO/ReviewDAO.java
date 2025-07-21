@@ -148,6 +148,20 @@ public class ReviewDAO {
         return success;
     }
     
+    public boolean updateReviewStatus(String reviewId, boolean status)
+    {
+        ReviewDTO review = getReviewById(reviewId);
+        if(review != null)
+        {
+            review.setStatus(status);
+            return update(review);
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
     private void closeResources(Connection conn, PreparedStatement ps, ResultSet rs) {
         try {
             if (rs != null) {

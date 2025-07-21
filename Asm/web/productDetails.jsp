@@ -5,6 +5,7 @@
 <%@page import="java.text.DecimalFormat" %>
 <%@page import="java.util.List" %>
 <%@page import="model.DTO.ReviewDTO" %>
+<%@page import="utils.AuthUtils" %>
 <%
     
     DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -67,6 +68,22 @@
                         <input type="hidden" name="productId" value="<%= (product!=null)?product.getProductId():""%>"/>
                         <button type="submit"><i class="fa-solid fa-message"></i> Comment</button>
                     </form>
+                        <!--
+                        <% if (AuthUtils.isAdmin(request))
+                        {
+                        %>
+                            <form action="MainController" method="post">
+                                <input type="hidden" name="action" value="deleteProduct"/>
+                                <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
+                                <button type="submit" onclick="return confirm('Are You Sure About That!^^')">
+                                  Delete Product
+                                </button>
+                            </form>
+                        <%
+                        }
+                        %>
+                        -->
+                    
                 </div> 
             </div>
         </div>
@@ -114,6 +131,14 @@
                     <div>
                         <form action="createReview.jsp" method="post">
                             <button type="submit"><i class="fa-solid fa-ear-listen"></i> Edit Review</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form action="MainController" method="post">
+                            <input type="hidden" name="action" value="deleteReview"/>
+                            <input type="hidden" name="reviewId" value="<%=u.getReviewId()%>"/>
+                            <input type="submit" value="Delete Review" 
+                                               onclick="return confirm('Are you sure you want to delete this review?')"/>
                         </form>
                     </div>
                 </div>

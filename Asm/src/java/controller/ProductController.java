@@ -27,6 +27,7 @@ import utils.AuthUtils;
 @WebServlet(name = "ProductController", urlPatterns = {"/ProductController"})
 public class ProductController extends HttpServlet {
 
+    ProductDAO pdao = new ProductDAO();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -53,7 +54,7 @@ public class ProductController extends HttpServlet {
                 url = handleCreate(request,response);
             }else if(action.equals("update")){
                 url = handleUpdate(request,response);
-            }else if(action.equals("delete")){
+            }else if(action.equals("deleteProduct")){
                 url = handleDelete(request,response);
             }else if(action.equals("showCreateForm")){
                 url = handleShowCreateForm(request, response);
@@ -128,7 +129,7 @@ public class ProductController extends HttpServlet {
         return "home.jsp";
     }
 
-    private String handleViewProductDetails(HttpServletRequest request, HttpServletResponse response) {
+    public String handleViewProductDetails(HttpServletRequest request, HttpServletResponse response) {
         try {
             
             String proId = request.getParameter("productId");
@@ -322,8 +323,27 @@ public class ProductController extends HttpServlet {
 }
 
 
-    private String handleDelete(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private String handleDelete(HttpServletRequest request, HttpServletResponse response)
+    {
+        if (AuthUtils.isAdmin(request))
+        {
+            String productId = request.getParameter("productId");
+            if (pdao.delete(productId))
+            {
+                request.setAttribute("message", "Delete Product Successfully!");
+                return handleViewProductDetails(request, response);
+            }
+            else
+            {
+                request.setAttribute("errorMessage", "FAIL TO DELETE PRODUCT!");
+                return "error.jsp";
+            }
+        }
+        else
+        {
+            request.setAttribute("errorMessage", "NOT ALLOW DELETE!!");
+            return "error.jsp";
+        }
     }
 
     private String handleDisplayCategory(HttpServletRequest request, HttpServletResponse response) {

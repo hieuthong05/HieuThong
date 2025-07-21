@@ -21,7 +21,7 @@ public class ProductDAO {
     
     private static final String CREATE_PRODUCT = "INSERT INTO Product(name,brandId,categoryId,price,stock,description,imageUrl) VALUES (?,?,?,?,?,?,?)";
     private static final String UPDATE_PRODUCT = "UPDATE Product SET name=?,brandId=?,categoryId=?,price=?,stock=?,description=?,imageUrl=? WHERE productId=?";
-    private static final String DELETE_PRODUCT = "DELETE FROM Product WHERE productId=?";
+    private static final String DELETE_PRODUCT = "DELETE FROM Product WHERE productId = ?";
 
     public List<ProductDTO>getAll(){
         List<ProductDTO> products = new ArrayList<>();
@@ -267,6 +267,30 @@ public class ProductDAO {
         }
 
         return false;
+    }
+    
+    public boolean delete(String productId)
+    {
+        boolean success = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+        try
+         {
+             conn = DbUtils.getConnection();
+             ps = conn.prepareStatement(DELETE_PRODUCT);
+             ps.setString(1, productId);
+             
+             int rowsAffected = ps.executeUpdate();
+             success = (rowsAffected > 0);
+         }
+         catch (Exception e) {
+             System.err.println("Error in  delete(productId): " + e.getMessage());
+             e.printStackTrace();
+         } finally {
+             closeResources(conn, ps, null);
+         }
+        return success;
     }
 
 
