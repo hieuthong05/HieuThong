@@ -242,11 +242,16 @@ public class ReviewController extends HttpServlet {
         {
             String reviewId = request.getParameter("reviewId");
             boolean check = rdao.updateReviewStatus(reviewId, false);
-            
+            if (check)
+            {
                 request.setAttribute("message", "Delete Review Successfully. ^^");
                 return "home.jsp";
-            
-            
+            }
+            else
+            {
+                request.setAttribute("errorMessage", "Fail To Delete Review!!!");
+               return "error.jsp";
+            }
             
         }
         else

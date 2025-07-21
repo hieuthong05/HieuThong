@@ -133,14 +133,22 @@
                             <button type="submit"><i class="fa-solid fa-ear-listen"></i> Edit Review</button>
                         </form>
                     </div>
-                    <div>
-                        <form action="MainController" method="post">
-                            <input type="hidden" name="action" value="deleteReview"/>
-                            <input type="hidden" name="reviewId" value="<%=u.getReviewId()%>"/>
-                            <input type="submit" value="Delete Review" 
-                                               onclick="return confirm('Are you sure you want to delete this review?')"/>
-                        </form>
-                    </div>
+                    
+                        <%if (AuthUtils.isAdmin(request))
+                        {
+                        %>
+                            <div>
+                                <form action="MainController" method="post">
+                                    <input type="hidden" name="action" value="deleteReview"/>
+                                    <input type="hidden" name="reviewId" value="<%=u.getReviewId()%>"/>
+                                    <input type="submit" value="Delete Review" 
+                                                       onclick="return confirm('Are you sure you want to delete this review?')"/>
+                                </form>
+                            </div>
+                        <%
+                        }
+                        %>
+                    
                 </div>
                 <%
                     }

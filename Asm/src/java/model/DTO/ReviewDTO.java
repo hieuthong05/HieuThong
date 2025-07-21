@@ -50,6 +50,7 @@ public class ReviewDTO {
         this.reviewId = reviewId;
         this.rating = rating;
         this.comment = comment;
+        this.status = true;
     }
 
     public String getReviewId() {

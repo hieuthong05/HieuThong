@@ -17,7 +17,7 @@ public class ReviewDAO {
     private static final String GET_REVIEW_BY_ID = "SELECT reviewId, userId, productId, rating, comment, createdAt, status FROM Review WHERE reviewId = ? AND status = 1";
     private static final String GET_REVIEW_BY_PRODUCTID = "SELECT reviewId, userId, productId, rating, comment, createdAt, status FROM Review WHERE productId = ? AND status = 1";
     private static final String CREATE_REVIEW = "INSERT INTO Review (userId, productId, rating, comment) VALUES (?, ?, ?, ?)";
-    private static final String UPDATE_REVIEW = "UPDATE Review SET rating = ?, comment = ? WHERE reviewId = ?";
+    private static final String UPDATE_REVIEW = "UPDATE Review SET rating = ?, comment = ?, status = ? WHERE reviewId = ?";
     
     public ReviewDAO() {
     }
@@ -133,7 +133,8 @@ public class ReviewDAO {
              ps = conn.prepareStatement(UPDATE_REVIEW);
              ps.setString(1, review.getRating());
              ps.setString(2, review.getComment());
-             ps.setString(3, review.getReviewId());
+             ps.setBoolean(3, review.isStatus());
+             ps.setString(4, review.getReviewId());
              
              
              int rowsAffected = ps.executeUpdate();
