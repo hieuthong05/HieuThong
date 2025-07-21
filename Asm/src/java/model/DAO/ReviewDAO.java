@@ -15,7 +15,8 @@ import utils.DbUtils;
 public class ReviewDAO {
     
     private static final String GET_REVIEW_BY_PRODUCTID = "SELECT reviewId, userId, productId, rating, comment, createdAt, status FROM Review WHERE productId = ? AND status = 1";
-            
+    private static final String CREATE_REVIEW = "INSERT INTO Review (userId, productId, rating, comment) VALUES (?, ?, ?, ?)";
+    
     public ReviewDAO() {
     }
     
@@ -54,6 +55,33 @@ public class ReviewDAO {
             closeResources(conn, ps, rs);
         }
         return list;
+    }
+    
+    public boolean create(ReviewDTO review)
+    {
+        boolean success = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+        try
+        {
+            conn = DbUtils.getConnection();
+            ps = conn.prepareStatement(CREATE_REVIEW);
+            ps.setString(1, review.getUserId());
+            ps.setString(2, review.getProductId());
+            ps.setString(3, review.getRating());
+            ps.setString(4, review.getComment());
+            
+            int rowsAffected = ps.executeUpdate();
+            success = (rowsAffected > 0);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error in create(review): " + e.getMessage());
+        } finally {
+            closeResources(conn, ps, null);
+        }
+        return success;
     }
     
     private void closeResources(Connection conn, PreparedStatement ps, ResultSet rs) {

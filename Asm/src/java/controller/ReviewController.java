@@ -11,7 +11,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.DAO.ProductDAO;
 import model.DAO.ReviewDAO;
+import model.DTO.ProductDTO;
 import model.DTO.ReviewDTO;
 import utils.AuthUtils;
 
@@ -31,10 +34,10 @@ public class ReviewController extends HttpServlet {
         try
         {
             String action = request.getParameter("action");
-//            if (action.equals("createReview"))
-//            {
-//                url = handleCreate(request, response);
-//            }
+            if (action.equals("createReview"))
+            {
+                url = handleCreate(request, response);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error Process Review Request: " + e.getMessage());
@@ -82,26 +85,63 @@ public class ReviewController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-//    private String handleCreate(HttpServletRequest request, HttpServletResponse response)
-//    {
-//       if (AuthUtils.isLoggedIn(request))
-//       {
-//           String errorMessage = "";
-//           String message = "";
-//           
-//           String userId = request.getParameter("userId");
-//           String productId = request.getParameter("productId");
-//           String rate = request.getParameter("rate");
-//           String comment = request.getParameter("comment");
-//           
-//           ReviewDTO review = new ReviewDTO(userId, productId, rate, comment);
-//           request.setAttribute("review", review);
-//       }
-//       else
-//       {
-//           request.setAttribute("errorMessage", "NOT ALLOW CREATE REVIEW!!!");
-//           return "error.jsp";
-//       }
-//    }
+    private String handleCreate(HttpServletRequest request, HttpServletResponse response)
+    {
+       if (AuthUtils.isLoggedIn(request))
+       {
+           String errorMessage = "";
+           String message = "";
+           
+           String userId = request.getParameter("userId");
+           String productId = request.getParameter("productId");
+           String rate = request.getParameter("rate");
+           String comment = request.getParameter("comment");
+           
+           ReviewDTO review = new ReviewDTO(userId, productId, rate, comment);
+           request.setAttribute("review", review);
+           
+           if (userId == null || userId.trim().isEmpty())
+           {
+               errorMessage = "<br/> userId is NULL or EMPTY!";
+           }
+           if (productId == null || productId.trim().isEmpty())
+           {
+               errorMessage += "<br/> productId is NULL or EMPTY!";
+           }
+           if (rate == null || rate.equals("empty"))
+           {
+               errorMessage += "<br/> Rate Must Be NOT NULL!";
+           }
+           
+            if (errorMessage.isEmpty())
+            {
+                if (!rdao.create(review))
+                {
+                    errorMessage += "<br/> Fail To Post Review!";
+                }
+            }
+            if (errorMessage.isEmpty())
+            {
+                int productId_value = Integer.parseInt(productId);
+                request.setAttribute("message", "Post Review Successfully. ^^");
+                ProductDAO productDAO = new ProductDAO();
+                ProductDTO product = productDAO.getProductById(productId_value); 
+                List<ReviewDTO> list = rdao.getReviewByProductId(productId);
+                request.setAttribute("product", product); 
+                request.setAttribute("list", list);
+                return "productDetails.jsp";
+            }
+            else
+            {
+                request.setAttribute("errorMessage", errorMessage);
+                return "createReview.jsp";
+            }
+       }
+       else
+       {
+           request.setAttribute("errorMessage", "NOT ALLOW CREATE REVIEW!!!");
+           return "error.jsp";
+       }
+    }
 
 }

@@ -5,6 +5,7 @@
 <%@page import="java.text.DecimalFormat" %>
 <%@page import="java.util.List" %>
 <%@page import="model.DTO.ReviewDTO" %>
+<%@page import="utils.AuthUtils" %>
 <%
     
     DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -14,6 +15,7 @@
     ProductDTO product = (ProductDTO) request.getAttribute("product");
     UserDTO user = (UserDTO) session.getAttribute("user");
     List<ReviewDTO> list = (List<ReviewDTO>) request.getAttribute("list");
+    String message = (String) request.getAttribute("message");
 %>
 <!DOCTYPE html>
 <html>
@@ -30,7 +32,7 @@
 
     <jsp:include page="header.jsp"/>
 
-
+    <span style="color: green"><%= (message!=null)?message:""%></span>
 <% if (product != null) { %>
     <div class="product-details">
         <img src="<%= product.getImageUrl() %>" alt="Product Image" />
@@ -59,11 +61,16 @@
                     </button>
                 </form>
                     
-                
-                <form action="createReview.jsp" method="post">
+                <%
+                    if (AuthUtils.isLoggedIn(request))
+                    {
+                    %><form action="createReview.jsp" method="post">
                     <input type="hidden" name="productId" value="<%= (product!=null)?product.getProductId():""%>"/>
                     <button type="submit">Comment</button>
-                </form>
+                </form><%
+                    }
+                 %>
+                
                    
             </div>
         </div>
@@ -105,11 +112,17 @@
                 <div class="author">
                     — User ID: <%= u.getUserId() %>
                 </div>
-                <div>
+                <%
+                    if (AuthUtils.isLoggedIn(request))
+                    {
+                    %><div>
                     <form action="createReview.jsp" method="post">
                         <button type="submit">Edit Review</button>
                     </form>
-                </div>
+                </div><%
+                    }
+                 %>
+                
             </div>
             <%
                 }
