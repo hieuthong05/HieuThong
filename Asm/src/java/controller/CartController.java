@@ -70,26 +70,35 @@ public class CartController extends HttpServlet {
 
             /* ------------ Thêm sản phẩm ------------ */
             case "addToCart": {
-                int pid   = toInt(req.getParameter("productId"), 0);
-                double price = Double.parseDouble(req.getParameter("unitPrice"));
-                int qty   = Math.max(1, toInt(req.getParameter("qty"), 1));
+    int pid   = toInt(req.getParameter("productId"), 0);
+    double price = Double.parseDouble(req.getParameter("unitPrice"));
+    int qty   = Math.max(1, toInt(req.getParameter("qty"), 1));
 
-                OrderItemDTO tgt = null;
-                for (OrderItemDTO it : cart)
-                    if (it.getProductId() == pid) { tgt = it; break; }
+    OrderItemDTO tgt = null;
+    for (OrderItemDTO it : cart)
+        if (it.getProductId() == pid) { tgt = it; break; }
 
-                if (tgt == null) {
-                    tgt = new OrderItemDTO();
-                    tgt.setProductId(pid);
-                    tgt.setUnitPrice(price);
-                    tgt.setQuantity(0);
-                    cart.add(tgt);
-                }
-                tgt.setQuantity(tgt.getQuantity() + qty);
+    if (tgt == null) {
+        tgt = new OrderItemDTO();
+        tgt.setProductId(pid);
+        tgt.setUnitPrice(price);
+        tgt.setQuantity(0);
+        cart.add(tgt);
+    }
+    tgt.setQuantity(tgt.getQuantity() + qty);
 
-                back(req, resp);               // quay lại trang trước
-                break;
-            }
+    /* =======================================================
+       Nếu form gửi kèm ?next=checkout  →  nhảy thẳng sang tạo đơn
+       ======================================================= */
+    String next = req.getParameter("next");
+    if ("checkout".equals(next)) {
+        resp.sendRedirect(req.getContextPath()
+                + "/OrderController?action=checkout");
+    } else {
+        back(req, resp);      // logic cũ: quay về trang trước
+    }
+    break;
+}
 
             /* ------------ +/- số lượng ------------ */
             case "updateQuantity": {            // index + delta
