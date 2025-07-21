@@ -38,6 +38,14 @@ public class ReviewController extends HttpServlet {
             {
                 url = handleCreate(request, response);
             }
+            else if (action.equals("editReview"))
+            {
+                url = handleEdit(request, response);
+            }
+//            else if (action.equals("updateReview"))
+//            {
+//                url = handleUpdate(request, response);
+//            }
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error Process Review Request: " + e.getMessage());
@@ -143,5 +151,66 @@ public class ReviewController extends HttpServlet {
            return "error.jsp";
        }
     }
+
+    private String handleEdit(HttpServletRequest request, HttpServletResponse response)
+    {
+        if (AuthUtils.isLoggedIn(request))
+        {
+            String reviewId = request.getParameter("reviewId");
+            ReviewDTO review = rdao.getReviewById(reviewId);
+            if (review != null)
+            {
+                request.setAttribute("review", review);
+                request.setAttribute("isEdit", true);
+                return "createReview.jsp";
+            }
+            else
+            {
+                request.setAttribute("errorMessage", "Not Exists Review!");
+                request.setAttribute("isEdit", true);
+                return "createReview.jsp";
+            }
+        }
+        else
+        {
+            request.setAttribute("errorMessage", "NOT ALLOW EDIT REVIEW!!");
+            return "error.jsp";
+        }
+    }
+
+//    private String handleUpdate(HttpServletRequest request, HttpServletResponse response)
+//    {
+//        if (AuthUtils.isLoggedIn(request))
+//        {
+//           String errorMessage = "";
+//           String message = "";
+//           
+//           String userId = request.getParameter("userId");
+//           String productId = request.getParameter("productId");
+//           String rate = request.getParameter("rate");
+//           String comment = request.getParameter("comment");
+//           
+//           ReviewDTO review = new ReviewDTO(userId, productId, rate, comment);
+//           request.setAttribute("review", review);
+//           
+//           if (userId == null || userId.trim().isEmpty())
+//           {
+//               errorMessage = "<br/> userId is NULL or EMPTY!";
+//           }
+//           if (productId == null || productId.trim().isEmpty())
+//           {
+//               errorMessage += "<br/> productId is NULL or EMPTY!";
+//           }
+//           if (rate == null || rate.equals("empty"))
+//           {
+//               errorMessage += "<br/> Rate Must Be NOT NULL!";
+//           }
+//        }
+//        else
+//        {
+//            request.setAttribute("errorMessage", "NOT ALLOW UPDATE REVIEW!!");
+//            return "error.jsp";
+//        }
+//    }
 
 }

@@ -14,10 +14,46 @@ import utils.DbUtils;
  */
 public class ReviewDAO {
     
+    private static final String GET_REVIEW_BY_ID = "SELECT reviewId, userId, productId, rating, comment, createdAt, status FROM Review WHERE reviewId = ? AND status = 1";
     private static final String GET_REVIEW_BY_PRODUCTID = "SELECT reviewId, userId, productId, rating, comment, createdAt, status FROM Review WHERE productId = ? AND status = 1";
     private static final String CREATE_REVIEW = "INSERT INTO Review (userId, productId, rating, comment) VALUES (?, ?, ?, ?)";
     
     public ReviewDAO() {
+    }
+    
+    public ReviewDTO getReviewById(String reviewId)
+    {
+        ReviewDTO review = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        try
+        {
+            conn = DbUtils.getConnection();
+            ps = conn.prepareStatement(GET_REVIEW_BY_ID);
+            ps.setString(1, reviewId);
+            rs = ps.executeQuery();
+            
+            if(rs.next())
+            {
+                review = new ReviewDTO();
+                review.setReviewId(rs.getString("reviewId"));
+                review.setUserId(rs.getString("userId"));
+                review.setProductId(rs.getString("productId"));
+                review.setRating(rs.getString("rating"));
+                review.setComment(rs.getString("comment"));
+                review.setCreatedAt(rs.getDate("createdAt").toLocalDate());
+                review.setStatus(rs.getBoolean("status"));
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Error in getReviewById(reviewId): " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return review;
     }
     
     public List<ReviewDTO> getReviewByProductId(String productId)

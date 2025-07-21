@@ -19,11 +19,14 @@
             UserDTO user = AuthUtils.getCurrentUser(request);
             String productId = request.getParameter("productId");
             ReviewDTO review = (ReviewDTO) request.getAttribute("review");
+            String errorMessage = (String) request.getAttribute("errorMessage");
+            String message = (String) request.getAttribute("message");
+            boolean isEdit = request.getAttribute("isEdit") != null;
             if (AuthUtils.isLoggedIn(request))
             {
         %>
         <form action="MainController" method="post">
-            <input type="hidden" name="action" value="createReview"/>
+            <input type="hidden" name="action" value="<%= isEdit ? "updateReview":"createReview"%>"/>
             <input type="hidden" name="userId" value="<%= (user!=null)?user.getUserId():""%>"/>
             <input type="hidden" name="productId" value="<%= (productId!=null)?productId:""%>"/>
             <label for="rate">Rate</label>
@@ -42,7 +45,14 @@
             </textarea>
             </div>
             
-            <div><button type="submit">Post</button></div>
+            <div> <input type="submit" value="<%= isEdit ? "Save" : "Post" %>"/></div>
+            <% if (errorMessage != null && !errorMessage.isEmpty()) { %>
+            <%= errorMessage %>
+        <% } %>
+
+        <% if (message != null && !message.isEmpty()) { %>
+            <%= message %>
+        <% } %>
         </form>
             <%}else{response.sendRedirect("MainController");}%>
     </body>

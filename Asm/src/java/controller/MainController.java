@@ -31,7 +31,9 @@ public class MainController extends HttpServlet {
     }
     
     private boolean isReviewAction(String action) {
-        return "createReview".equals(action);
+        return "createReview".equals(action)
+                || "editReview".equals(action)
+                || "updateReview".equals(action);
     }
 
     /*** Xác định các action liên quan đến sản phẩm và danh mục ***/
