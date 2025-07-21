@@ -31,10 +31,10 @@ public class ReviewController extends HttpServlet {
         try
         {
             String action = request.getParameter("action");
-            if (action.equals("createReview"))
-            {
-                url = handleCreate(request, response);
-            }
+//            if (action.equals("createReview"))
+//            {
+//                url = handleCreate(request, response);
+//            }
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error Process Review Request: " + e.getMessage());
@@ -82,26 +82,26 @@ public class ReviewController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private String handleCreate(HttpServletRequest request, HttpServletResponse response)
-    {
-       if (AuthUtils.isLoggedIn(request))
-       {
-           String errorMessage = "";
-           String message = "";
-           
-           String userId = request.getParameter("userId");
-           String productId = request.getParameter("productId");
-           String rate = request.getParameter("rate");
-           String comment = request.getParameter("comment");
-           
-           ReviewDTO review = new ReviewDTO(userId, productId, rate, comment);
-           request.setAttribute("review", review);
-       }
-       else
-       {
-           request.setAttribute("errorMessage", "NOT ALLOW CREATE REVIEW!!!");
-           return "error.jsp";
-       }
-    }
+//    private String handleCreate(HttpServletRequest request, HttpServletResponse response)
+//    {
+//       if (AuthUtils.isLoggedIn(request))
+//       {
+//           String errorMessage = "";
+//           String message = "";
+//           
+//           String userId = request.getParameter("userId");
+//           String productId = request.getParameter("productId");
+//           String rate = request.getParameter("rate");
+//           String comment = request.getParameter("comment");
+//           
+//           ReviewDTO review = new ReviewDTO(userId, productId, rate, comment);
+//           request.setAttribute("review", review);
+//       }
+//       else
+//       {
+//           request.setAttribute("errorMessage", "NOT ALLOW CREATE REVIEW!!!");
+//           return "error.jsp";
+//       }
+//    }
 
 }
