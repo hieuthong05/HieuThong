@@ -1,0 +1,89 @@
+/* ===== khung ngoài (card trắng) ===== */
+.order-container{
+  max-width:950px;
+  margin:80px auto 120px;          /* chừa header + footer fixed */
+  background:#fff;
+  padding:35px 40px;
+  border-radius:12px;
+  box-shadow:0 4px 18px rgba(0,0,0,.15);
+}
+
+/* ===== tiêu đề ===== */
+.order-heading{
+  margin:0 0 25px;
+  font-size:26px;
+  color:#e53935;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* ===== bảng items ===== */
+.order-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:30px;
+  font-size:15px;
+}
+.order-table thead{
+  background:#e53935;
+  color:#fff;
+}
+.order-table th, .order-table td{
+  padding:12px 14px;
+  text-align:center;
+  border-bottom:1px solid #eee;
+}
+.order-table tbody tr:nth-child(even){
+  background:#fafafa;
+}
+
+/* ===== khung Payment ===== */
+.pay-wrapper{
+  padding:22px 28px;
+  border:2px dashed #e53935;
+  border-radius:10px;
+  background:#fff8f8;
+  max-width:540px;
+}
+.pay-wrapper.paid{
+  border-color:#2e7d32;
+  background:#f3fff4;
+}
+
+/* thông báo  */
+.note{margin:0 0 18px;font-weight:600;}
+.warning{color:#e53935;}
+.success{color:#2e7d32;}
+
+/* form thanh toán */
+.pay-form{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px 22px;
+  align-items:flex-end;
+}
+.pay-form label{
+  display:flex;
+  flex-direction:column;
+  font-size:14px;
+  font-weight:600;
+}
+.pay-form input[type="text"],
+.pay-form select{
+  padding:6px 10px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  min-width:150px;
+}
+.btn-pay{
+  background:#2e7d32;
+  color:#fff;
+  border:none;
+  padding:11px 26px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+  transition:opacity .2s;
+}
+.btn-pay:hover{opacity:.9;}
