@@ -17,6 +17,7 @@ public class ReviewDAO {
     private static final String GET_REVIEW_BY_ID = "SELECT reviewId, userId, productId, rating, comment, createdAt, status FROM Review WHERE reviewId = ? AND status = 1";
     private static final String GET_REVIEW_BY_PRODUCTID = "SELECT reviewId, userId, productId, rating, comment, createdAt, status FROM Review WHERE productId = ? AND status = 1";
     private static final String CREATE_REVIEW = "INSERT INTO Review (userId, productId, rating, comment) VALUES (?, ?, ?, ?)";
+    private static final String UPDATE_REVIEW = "UPDATE Review SET rating = ?, comment = ? WHERE reviewId = ?";
     
     public ReviewDAO() {
     }
@@ -117,6 +118,33 @@ public class ReviewDAO {
         } finally {
             closeResources(conn, ps, null);
         }
+        return success;
+    }
+    
+    public boolean update(ReviewDTO review)
+    {
+        boolean success = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+        try
+         {
+             conn = DbUtils.getConnection();
+             ps = conn.prepareStatement(UPDATE_REVIEW);
+             ps.setString(1, review.getRating());
+             ps.setString(2, review.getComment());
+             ps.setString(3, review.getReviewId());
+             
+             
+             int rowsAffected = ps.executeUpdate();
+             success = (rowsAffected > 0);
+         }
+         catch (Exception e) {
+             System.err.println("Error in update(review): " + e.getMessage());
+             e.printStackTrace();
+         } finally {
+             closeResources(conn, ps, null);
+         }
         return success;
     }
     

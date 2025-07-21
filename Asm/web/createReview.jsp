@@ -27,6 +27,13 @@
         %>
         <form action="MainController" method="post">
             <input type="hidden" name="action" value="<%= isEdit ? "updateReview":"createReview"%>"/>
+            <% if (isEdit)
+            {
+            %>
+            <input type="hidden" name="reviewId" value="<%= (review!=null)?review.getReviewId():""%>"/>
+            <%
+            }
+            %>
             <input type="hidden" name="userId" value="<%= (user!=null)?user.getUserId():""%>"/>
             <input type="hidden" name="productId" value="<%= (productId!=null)?productId:""%>"/>
             <label for="rate">Rate</label>
@@ -47,11 +54,11 @@
             
             <div> <input type="submit" value="<%= isEdit ? "Save" : "Post" %>"/></div>
             <% if (errorMessage != null && !errorMessage.isEmpty()) { %>
-            <%= errorMessage %>
+            <span style="color: red"><%= errorMessage %></span>
         <% } %>
 
         <% if (message != null && !message.isEmpty()) { %>
-            <%= message %>
+        <span style="color: green"><%= message %></span>
         <% } %>
         </form>
             <%}else{response.sendRedirect("MainController");}%>

@@ -118,6 +118,7 @@
                     %><div>
                     <form action="MainController" method="post">
                         <input type="hidden" name="action" value="editReview"/>
+                        <input type="hidden" name="productId" value="<%= (product!=null)?product.getProductId():""%>"/>
                         <input type="hidden" name="reviewId" value="<%= u.getReviewId()%>"/>
                         <button type="submit">Edit Review</button>
                     </form>

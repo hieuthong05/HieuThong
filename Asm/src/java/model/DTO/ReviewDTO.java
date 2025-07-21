@@ -46,6 +46,12 @@ public class ReviewDTO {
         this.status = true;
     }
 
+    public ReviewDTO(String reviewId, String rating, String comment) {
+        this.reviewId = reviewId;
+        this.rating = rating;
+        this.comment = comment;
+    }
+
     public String getReviewId() {
         return reviewId;
     }
