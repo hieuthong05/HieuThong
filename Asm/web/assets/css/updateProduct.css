@@ -36,7 +36,7 @@ body {
 .form-container input[type="file"],
 .form-container textarea,
 .form-container select {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin-top: 8px;
   margin-bottom: 16px;

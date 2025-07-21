@@ -1,5 +1,7 @@
 body {
-    background-color: #111;
+    background: #200122;
+    background: -webkit-linear-gradient(to right, #6f0000, #200122);
+    background: linear-gradient(to right, #6f0000, #200122);
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -18,9 +20,10 @@ body {
     padding: 20px;
     border-radius: 20px;
     position: relative;
-    background-color: #1a1a1a;
+    background-color: rgba(26, 26, 26, 0.8);
     color: #fff;
     border: 1px solid #333;
+    
 }
 
 .title {
@@ -31,7 +34,7 @@ body {
     display: flex;
     align-items: center;
     padding-left: 30px;
-    color: #00bfff;
+    color: #ED213A;
 }
 
 .title::before,
@@ -42,7 +45,7 @@ body {
     width: 16px;
     border-radius: 50%;
     left: 0px;
-    background-color: #00bfff;
+    background-color: #ED213A;
 }
 
 .title::after {
@@ -51,7 +54,7 @@ body {
 
 .form label {
     position: relative;
-    width: 100%;
+    width: 95%;
 }
 
 .form .input {
@@ -76,7 +79,7 @@ body {
 
 .form label .input:focus + span,
 .form label .input:valid + span {
-    color: #00bfff;
+    color: #ED213A;
     top: 0px;
     font-size: 0.7em;
     font-weight: 600;
@@ -89,13 +92,13 @@ body {
     border-radius: 10px;
     color: #fff;
     font-size: 16px;
-    background-color: #00bfff;
+    background-color: #93291E;
     cursor: pointer;
     margin-right: 10px;
 }
 
 .submit:hover, .reset:hover {
-    background-color: #00bfff96;
+    background-color: #ED213A;
 }
 
 .error {

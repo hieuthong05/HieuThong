@@ -1,7 +1,9 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
+    background: #200122;
+    background: -webkit-linear-gradient(to right, #6f0000, #200122);
+    background: linear-gradient(to right, #6f0000, #200122);
 }
 
 /* Search Bar */
@@ -50,7 +52,7 @@ body {
 /* Product Details Section */
 .product-details {
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
     gap: 30px;
     background: #fff;
     padding: 20px;
@@ -60,16 +62,31 @@ body {
     margin: 40px auto;
 }
 
-.product-details img {
+.product-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: nowrap; /* Không cho xuống dòng */
+}
+
+.product-image {
+    flex-shrink: 0; /* Giữ kích thước cố định cho ảnh */
     width: 300px;
+}
+
+.product-image img {
+    width: 100%;
     height: auto;
     border-radius: 8px;
     object-fit: cover;
+    display: block;
 }
 
-.product-info {
+.product-infomation {
     flex: 1;
+    display: flow;
 }
+
 
 .product-info h2 {
     margin-top: 0;

@@ -1,4 +1,8 @@
 /* From Uiverse.io by andrew-demchenk0 */ 
+body{
+    
+}
+
 .form {
   --input-focus: #2d8cf0;
   --font-color: #323232;
@@ -6,7 +10,9 @@
   --bg-color: #fff;
   --main-color: #323232;
   padding: 20px;
-  background: lightgrey;
+  background: #232526;
+  background: -webkit-linear-gradient(to right, #414345, #232526);
+  background: linear-gradient(to right, #414345, #232526);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -18,14 +24,14 @@
 }
 
 .title {
-  color: var(--font-color);
+  color: #ED213A;
   font-weight: 900;
   font-size: 20px;
   margin-bottom: 25px;
 }
 
 .title span {
-  color: var(--font-color-sub);
+  color: #ED213A;
   font-weight: 600;
   font-size: 17px;
 }
@@ -66,7 +72,7 @@
   border: 2px solid var(--main-color);
   background-color: var(--bg-color);
   box-shadow: 4px 4px var(--main-color);
-  color: var(--font-color);
+  color: #93291E;
   font-size: 25px;
   display: flex;
   justify-content: center;
@@ -94,7 +100,7 @@
   box-shadow: 4px 4px var(--main-color);
   font-size: 17px;
   font-weight: 600;
-  color: var(--font-color);
+  color: #ED213A;
   cursor: pointer;
 }
 
@@ -103,6 +109,9 @@ body, html {
   margin: 0;
   padding: 0;
   position: relative;
+  background: #200122;
+  background: -webkit-linear-gradient(to right, #6f0000, #200122);
+  background: linear-gradient(to right, #6f0000, #200122);
 }
 
 .container {

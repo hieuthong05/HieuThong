@@ -11,6 +11,23 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.star {
+    width: 20px;
+    height: 20px;
+    color: #ccc; /* sao trống */
+    transition: color 0.3s ease;
+    margin-right: 2px;
+}
+
+.star.filled {
+    color: #ffc107; /* sao vàng */
+}
+
+.star.empty {
+    color: #444; /* sao xám đậm hoặc #ccc cũng được */
+}
+
+
 .stars {
   display: flex;
   gap: 0.125rem;
@@ -51,4 +68,44 @@
   justify-content: center;
   padding: 20px;
   background-color: #f4f4f4;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #3a3a3a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+button:hover {
+    background-color: #5c5c5c;
+}
+
+button i {
+    font-size: 16px;
+}
+
+/* Riêng nút Comment (ở product-info) */
+.product-actions-center form:last-child button {
+    background-color: #007bff;
+}
+
+.product-actions-center form:last-child button:hover {
+    background-color: #0056b3;
+}
+
+/* Nút Edit Review (trong mỗi card review) */
+.card form button {
+    background-color: #28a745;
+}
+
+.card form button:hover {
+    background-color: #1e7e34;
 }
