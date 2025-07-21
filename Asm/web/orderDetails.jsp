@@ -1,94 +1,118 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="model.DTO.OrderDTO" %>
-<%@ page import="model.DTO.OrderItemDTO" %>
-<%@ page import="model.DTO.PaymentDTO" %>
-<%@ page import="java.util.List" %>
+<%@ page import="model.DTO.*, java.util.*" %>
+<%
+    OrderDTO order = (OrderDTO) request.getAttribute("order");
+    List<OrderItemDTO> items = order.getItems();
+
+    double total = 0;
+    for (OrderItemDTO oi : items) {
+        total += oi.getQuantity() * oi.getUnitPrice();
+    }
+
+    boolean unpaid = !order.getPayment().isPresent();
+%>
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Order Details</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css"/>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/body.css"/>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css"/>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/orders.css"/>
+    <meta charset="UTF-8">
+    <title>Order #<%= order.getOrderId() %></title>
+
+    <!-- CSS chung -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/body.css">
+
+    <!-- CSS riêng cho Order -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/orderDetails.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-  <jsp:include page="header.jsp"/>
 
-  <div class="container">
-    <h3 class="section-title"><i class="fa-solid fa-receipt"></i> Order #<%= ((OrderDTO)request.getAttribute("order")).getOrderId() %></h3>
+<jsp:include page="header.jsp"/>
 
-    <%
-      OrderDTO order = (OrderDTO) request.getAttribute("order");
-      // Items
-      List<OrderItemDTO> items = order.getItems();
-    %>
-    <h4>Items</h4>
-    <table class="table">
-      <thead>
+<main class="order-container">
+
+    <h2 class="order-heading">
+        <i class="fa-solid fa-receipt"></i>&nbsp;Order&nbsp;#<%= order.getOrderId() %>
+    </h2>
+
+    <!-- ====== bảng Items ====== -->
+    <table class="order-table">
+        <thead>
         <tr>
-          <th>Product ID</th>
-          <th>Quantity</th>
-          <th>Unit Price</th>
-          <th>Subtotal</th>
+            <th>Product&nbsp;ID</th>
+            <th>Qty</th>
+            <th>Unit&nbsp;Price</th>
+            <th>Subtotal</th>
         </tr>
-      </thead>
-      <tbody>
-        <%
-          double total = 0;
-          for (OrderItemDTO oi : items) {
-            double sub = oi.getQuantity() * oi.getUnitPrice();
-            total += sub;
-        %>
+        </thead>
+        <tbody>
+        <% for (OrderItemDTO oi : items) { %>
+            <tr>
+                <td><%= oi.getProductId() %></td>
+                <td><%= oi.getQuantity() %></td>
+                <td><%= String.format("%,.0f đ", oi.getUnitPrice()) %></td>
+                <td><%= String.format("%,.0f đ", oi.getQuantity() * oi.getUnitPrice()) %></td>
+            </tr>
+        <% } %>
+        </tbody>
+        <tfoot>
         <tr>
-          <td><%= oi.getProductId() %></td>
-          <td><%= oi.getQuantity() %></td>
-          <td><%= String.format("%,.0f", oi.getUnitPrice()) %> đ</td>
-          <td><%= String.format("%,.0f", sub) %> đ</td>
+            <th colspan="3">Total</th>
+            <th><%= String.format("%,.0f đ", total) %></th>
         </tr>
-        <%
-          }
-        %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th colspan="3">Total</th>
-          <th><%= String.format("%,.0f", total) %> đ</th>
-        </tr>
-      </tfoot>
+        </tfoot>
     </table>
 
-    <%
-      PaymentDTO pay = order.getPayment().orElse(null);
-      if (pay != null) {
-    %>
-      <h4>Payment</h4>
-      <p>Method: <strong><%= pay.getMethod() %></strong></p>
-      <p>Amount: <strong><%= String.format("%,.0f", pay.getAmount()) %> đ</strong></p>
-      <p>Date: <strong><%= pay.getPaidAt() %></strong></p>
-    <%
-      } else {
-    %>
-      <h4 style="color:red;">This order has not been paid yet.</h4>
-      <form action="PaymentController" method="post">
-        <input type="hidden" name="action" value="processPayment"/>
-        <input type="hidden" name="orderId" value="<%= order.getOrderId() %>"/>
-        <label>Amount: </label>
-        <input type="text" name="amount" value="<%= total %>" readonly/>
-        <label>Method: </label>
-        <select name="method">
-          <option value="credit">Credit Card</option>
-          <option value="bank">Bank Transfer</option>
-          <option value="cod">Cash on Delivery</option>
-        </select>
-        <button type="submit" class="btn-buy-full">Pay Now</button>
-      </form>
-    <%
-      }
-    %>
-  </div>
+    <!-- ====== Payment ====== -->
+    <% if (unpaid) { %>
+        <div class="pay-wrapper">
+            <p class="note warning">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                This order has not been paid yet.
+            </p>
 
-  <jsp:include page="footer.jsp"/>
+            <form class="pay-form" action="PaymentController" method="post">
+                <input type="hidden" name="action" value="processPayment">
+                <input type="hidden" name="orderId" value="<%= order.getOrderId() %>">
+
+                <label>
+                    Amount
+                    <input type="text" name="amount"
+                           value='<%= String.format("%,.0f", total) %>' readonly />
+                </label>
+
+                <label>
+                    Method
+                    <select name="method">
+                        <option value="credit">Credit Card</option>
+                        <option value="bank">Bank Transfer</option>
+                        <option value="cod">Cash on Delivery</option>
+                    </select>
+                </label>
+
+                <button type="submit" class="btn-pay">
+                    <i class="fa-solid fa-credit-card"></i>&nbsp;Pay&nbsp;Now
+                </button>
+            </form>
+        </div>
+
+    <% } else { 
+           PaymentDTO p = order.getPayment().get(); %>
+
+        <div class="pay-wrapper paid">
+            <p class="note success">
+                <i class="fa-solid fa-circle-check"></i>
+                Paid&nbsp;<strong><%= String.format("%,.0f đ", p.getAmount()) %></strong>
+                via&nbsp;<%= p.getMethod() %> on <%= p.getPaidAt() %>
+            </p>
+        </div>
+
+    <% } %>
+
+</main>
+
+<jsp:include page="footer.jsp"/>
+
 </body>
 </html>
