@@ -34,14 +34,14 @@ public class MainController extends HttpServlet {
 
     private boolean isReviewAction(String action) {
         return "createReview".equals(action)
-<<<<<<< HEAD
+
                 || "editReview".equals(action)
                 || "updateReview".equals(action)
-                || "deleteReview".equals(action);
-=======
+                || "deleteReview".equals(action)
+
             || "editReview".equals(action)
             || "updateReview".equals(action);
->>>>>>> 4b03c2b03aa2ef8c6d457717240b46596a71c9e5
+
     }
 
     private boolean isProductAction(String action) {
