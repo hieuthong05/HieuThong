@@ -158,15 +158,21 @@ public class ReviewController extends HttpServlet {
 
     private String handleEdit(HttpServletRequest request, HttpServletResponse response)
     {
-        if (AuthUtils.isLoggedIn(request))
-        {
             String reviewId = request.getParameter("reviewId");
             ReviewDTO review = rdao.getReviewById(reviewId);
             if (review != null)
             {
-                request.setAttribute("review", review);
-                request.setAttribute("isEdit", true);
-                return "createReview.jsp";
+                if ( (AuthUtils.isReviewOfUser(request, review.getUserId())) || (AuthUtils.isAdmin(request)) )
+                {
+                    request.setAttribute("review", review);
+                    request.setAttribute("isEdit", true);
+                    return "createReview.jsp";
+                }
+                else
+                {
+                    request.setAttribute("errorMessage", "NOT ALLOW EDIT REVIEW!!");
+                    return "error.jsp";
+                }
             }
             else
             {
@@ -174,22 +180,18 @@ public class ReviewController extends HttpServlet {
                 request.setAttribute("isEdit", true);
                 return "createReview.jsp";
             }
-        }
-        else
-        {
-            request.setAttribute("errorMessage", "NOT ALLOW EDIT REVIEW!!");
-            return "error.jsp";
-        }
     }
 
     private String handleUpdate(HttpServletRequest request, HttpServletResponse response)
     {
-        if (AuthUtils.isLoggedIn(request))
+        String reviewId = request.getParameter("reviewId");
+        ReviewDTO rv = rdao.getReviewById(reviewId);
+        if ((AuthUtils.isReviewOfUser(request, rv.getUserId())) || (AuthUtils.isAdmin(request)) )
         {
            String errorMessage = "";
            String message = "";
            
-           String reviewId = request.getParameter("reviewId");
+           
            String userId = request.getParameter("userId");
            String productId = request.getParameter("productId");
            String rate = request.getParameter("rate");
@@ -238,9 +240,11 @@ public class ReviewController extends HttpServlet {
 
     private String handleDelete(HttpServletRequest request, HttpServletResponse response)
     {
-        if (AuthUtils.isLoggedIn(request))
+        String reviewId = request.getParameter("reviewId");
+        ReviewDTO rv = rdao.getReviewById(reviewId);
+        if ((AuthUtils.isReviewOfUser(request, rv.getUserId())) || (AuthUtils.isAdmin(request)))
         {
-            String reviewId = request.getParameter("reviewId");
+            
             boolean check = rdao.updateReviewStatus(reviewId, false);
             if (check)
             {
