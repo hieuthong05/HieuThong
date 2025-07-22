@@ -15,10 +15,47 @@ import utils.DbUtils;
 public class UserDAO {
     
      private static final String GET_ALL_USER = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE role = 'customer'";
+     private static final String GET_USER_BY_ID = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE userId = ?";
      private static final String GET_USER_BY_USERNAME = "SELECT userId, userName, name, email, password, role, createdAt, isActive FROM Users WHERE (userName COLLATE Latin1_General_CS_AS = ? OR email COLLATE Latin1_General_CS_AS = ?) AND isActive = 1";
      private static final String CREATE_USER = "INSERT INTO Users (userName, name, email, password, role) VALUES (?, ?, ?, ?, ?)";
      private static final String UPDATE_USER = "UPDATE Users SET userName = ?, name = ?, email = ?, password = ? WHERE userId = ?";
      private static final String DELETE_USER = "DELETE FROM Users WHERE userId = ?";
+     
+     public UserDTO getUserById(String userId)
+     {
+        UserDTO user = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        try
+        {
+            conn = DbUtils.getConnection();
+            ps = conn.prepareStatement(GET_USER_BY_ID);
+            ps.setString(1, userId);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next())
+            {
+                user = new UserDTO();
+                user.setUserId(rs.getString("userId"));
+                user.setUserName(rs.getString("userName"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+                user.setCreatedAt(rs.getDate("createdAt").toLocalDate());
+                user.setIsActive(rs.getBoolean("isActive"));
+            }    
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error in getUserById" + e.getMessage());
+        }
+           
+        return user;
+     }
      
      public UserDTO getUserByUsername(String username)
     {

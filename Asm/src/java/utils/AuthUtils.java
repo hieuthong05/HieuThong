@@ -50,4 +50,17 @@ public class AuthUtils {
     {
         return "You don't have permission access to " + action + ". Please contact administrator.";
     }
+    
+    public static boolean isReviewOfUser(HttpServletRequest request, String reviewOfUserId)
+    {
+        UserDTO user = getCurrentUser(request);
+        if(user!=null)
+        {
+            if (user.getUserId().equals(reviewOfUserId))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

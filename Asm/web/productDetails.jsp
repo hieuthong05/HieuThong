@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.DTO.ProductDTO" %>
 <%@page import="model.DTO.UserDTO" %>
+<%@page import="model.DAO.UserDAO" %>
 <%@page import="java.text.DecimalFormatSymbols" %>
 <%@page import="java.text.DecimalFormat" %>
 <%@page import="java.util.List" %>
@@ -14,6 +15,7 @@
     ProductDTO product = (ProductDTO) request.getAttribute("product");
     UserDTO user = (UserDTO) session.getAttribute("user");
     List<ReviewDTO> list = (List<ReviewDTO>) request.getAttribute("list");
+    UserDAO userDAO = new UserDAO();
 %>
 <!DOCTYPE html>
 <html>
@@ -59,10 +61,18 @@
                         <button type="submit" class="btn-buy-full"><i class="fas fa-credit-card"></i> Mua ngay</button>
                     </form>
 
-                    <form action="createReview.jsp" method="post">
-                        <input type="hidden" name="productId" value="<%= product.getProductId() %>"/>
-                        <button type="submit"><i class="fa-solid fa-message"></i> Comment</button>
-                    </form>
+                        <%
+                            if(AuthUtils.isLoggedIn(request))
+                            {
+                        %>
+                                <form action="createReview.jsp" method="post">
+                                    <input type="hidden" name="productId" value="<%= product.getProductId() %>"/>
+                                    <button type="submit"><i class="fa-solid fa-message"></i> Comment</button>
+                                </form>
+                        <%
+                            }
+                        %>
+                    
                 </div>
             </div>
         </div>
@@ -73,7 +83,8 @@
                 <span style="color: red"><h1>Have No Reviews!</h1></span>
             <% } else { %>
                 <div class="review-container">
-                    <% for (ReviewDTO u : list) { 
+                    <% for (ReviewDTO u : list) {
+                        UserDTO a = userDAO.getUserById(u.getUserId());
                         int rating = Integer.parseInt(u.getRating());
                     %>
                         <div class="card">
@@ -93,18 +104,20 @@
                                 <p class="description"><%= u.getComment() %></p>
                             </div>
 
-                            <div class="author">— User ID: <%= u.getUserId() %></div>
+                            <div class="author">—  <%= a!=null?a.getName():"" %></div>
 
-                            <div>
-                                <form action="MainController" method="post">
-                                    <input type="hidden" name="action" value="editReview"/>
-                                    <input type="hidden" name="productId" value="<%= product.getProductId() %>"/>
-                                    <input type="hidden" name="reviewId" value="<%= u.getReviewId() %>"/>
-                                    <button type="submit"><i class="fa-solid fa-message"></i> Edit Review</button>
-                                </form>
-                            </div>
+                            
 
-                            <% if (AuthUtils.isAdmin(request)) { %>
+                            <% if ( (AuthUtils.isReviewOfUser(request, u.getUserId())) || (AuthUtils.isAdmin(request)) ) { %>
+                                <div>
+                                    <form action="MainController" method="post">
+                                        <input type="hidden" name="action" value="editReview"/>
+                                        <input type="hidden" name="productId" value="<%= product.getProductId() %>"/>
+                                        <input type="hidden" name="reviewId" value="<%= u.getReviewId() %>"/>
+                                        <button type="submit"><i class="fa-solid fa-message"></i> Edit Review</button>
+                                    </form>
+                                </div>
+                                
                                 <div>
                                     <form action="MainController" method="post">
                                         <input type="hidden" name="action" value="deleteReview"/>
