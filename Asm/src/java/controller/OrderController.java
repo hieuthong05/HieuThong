@@ -29,15 +29,13 @@ public class OrderController extends HttpServlet {
         process(req, resp);
     }
 
-    /**
-     * Trung tâm điều phối: phân quyền, bắt action, chuyển tiếp hoặc redirect
-     */
+   
     private void process(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         // 1. Kiểm tra đã login chưa
         UserDTO currentUser = AuthUtils.getCurrentUser(req);
         if (currentUser == null) {
-            // chưa login → ép về trang login
+           
             resp.sendRedirect(req.getContextPath() + "/login.jsp");
             return;
         }
@@ -49,7 +47,7 @@ public class OrderController extends HttpServlet {
             if ("checkout".equals(action)) {
                 // tạo order mới từ giỏ hàng
                 handleCheckout(req, resp, currentUser);
-                return; // handleCheckout đã redirect
+                return;
             }
             String url;
             if ("viewOrder".equals(action)) {
@@ -72,13 +70,7 @@ public class OrderController extends HttpServlet {
         }
     }
 
-    /**
-     * Chuyển toàn bộ items trong session cart thành một đơn mới:
-     *  1) tạo Order
-     *  2) insert từng OrderItem
-     *  3) remove cart khỏi session
-     *  4) redirect về xem chi tiết order mới
-     */
+    
     @SuppressWarnings("unchecked")
     private void handleCheckout(HttpServletRequest req,
                                 HttpServletResponse resp,
@@ -141,7 +133,7 @@ public class OrderController extends HttpServlet {
         boolean isOwner = order.getUserId().equals(currentUser.getUserId());
         boolean isAdmin = AuthUtils.isAdmin(req);
         if (!isOwner && !isAdmin) {
-            // không có quyền xem
+            
             resp.sendError(HttpServletResponse.SC_FORBIDDEN,
                            "You do not have permission to view this order");
             return null;
@@ -152,9 +144,7 @@ public class OrderController extends HttpServlet {
         return "orderDetails.jsp";
     }
 
-    /**
-     * Hiển thị danh sách các đơn của user đang login
-     */
+    
     private String handleMyOrder(HttpServletRequest req,
                                  UserDTO currentUser) throws Exception {
         OrderDAO orderDao = new OrderDAO();

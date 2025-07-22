@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class PaymentDAO {
 
-    /* Create */
+   
     public boolean insert(PaymentDTO p) throws Exception {
         String sql = "INSERT INTO Payment(orderId, amount, method, paidAt) "
                    + "VALUES (?,?,?,?)";
@@ -32,7 +32,7 @@ public class PaymentDAO {
         }
     }
 
-    /* Read – by PK */
+    
     public Optional<PaymentDTO> findById(int id) throws Exception {
         String sql = "SELECT * FROM Payment WHERE paymentId=?";
         try (Connection con = DbUtils.getConnection();
@@ -45,7 +45,7 @@ public class PaymentDAO {
         }
     }
 
-    /* Read – all */
+  
     public List<PaymentDTO> findAll() throws Exception {
         List<PaymentDTO> list = new ArrayList<>();
         String sql = "SELECT * FROM Payment";
@@ -71,7 +71,7 @@ public class PaymentDAO {
         }
     }
 
-    /* Delete (nên hạn chế) */
+   
     public boolean delete(int id) throws Exception {
         String sql = "DELETE FROM Payment WHERE paymentId=?";
         try (Connection con = DbUtils.getConnection();

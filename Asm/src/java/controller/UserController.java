@@ -17,10 +17,7 @@ import model.DAO.UserDAO;
 import model.DTO.UserDTO;
 import utils.AuthUtils;
 
-/**
- *
- * @author ADMIN
- */
+
 @WebServlet(name = "UserController", urlPatterns = {"/UserController"})
 public class UserController extends HttpServlet {
 

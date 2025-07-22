@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-// import thêm để xử lý Cart
+
 import model.DAO.ProductDAO;
 import model.DTO.ProductDTO;
 import model.DTO.OrderItemDTO;
@@ -16,12 +16,10 @@ import model.DTO.OrderItemDTO;
 @WebServlet(name = "MainController", urlPatterns = {"/MainController"})
 public class MainController extends HttpServlet {
 
-    // Trang mặc định nếu không có action hợp lệ
+   
     private static final String HOME_PAGE = "home.jsp";
 
-    /* ============================================================= */
-    /* =============== 1. CÁC NHÓM ACTION ========================== */
-    /* ============================================================= */
+   
     private boolean isUserAction(String action) {
         return "login".equals(action)
             || "logout".equals(action)
@@ -73,9 +71,7 @@ public class MainController extends HttpServlet {
     private boolean isRemoveCart(String a){ return "removeCart".equals(a);}
     private boolean isUpdateCart(String a){ return "updateCart".equals(a);}
 
-    /* ============================================================= */
-    /* =============== 2. DISPATCHER =============================== */
-    /* ============================================================= */
+    
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
@@ -92,14 +88,14 @@ public class MainController extends HttpServlet {
             else if (isPaymentAction(action)) url = "/PaymentController";
             else if (isReviewAction (action)) url = "/ReviewController";
 
-            /* --------------- CART --------------- */
+          
             else if (isAddToCart (action)) { handleAddToCart(req, resp); return; }
             else if (isBuyNow    (action)) { handleBuyNow   (req, resp); return; }
             else if (isViewCart  (action)) { url = "cart.jsp"; }
             else if (isRemoveCart(action)) { handleRemoveCart(req, resp); return; }
             else if (isUpdateCart(action)) { handleUpdateCart(req, resp); return; }
 
-            /* fallback */
+        
             else {
                 resp.sendRedirect(req.getContextPath() + "/" + HOME_PAGE);
                 return;
@@ -115,7 +111,7 @@ public class MainController extends HttpServlet {
         rd.forward(req, resp);
     }
 
-    /* ---------------- HttpServlet overrides ---------------- */
+   
     @Override protected void doGet (HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException { processRequest(req, resp); }
 
@@ -124,9 +120,7 @@ public class MainController extends HttpServlet {
 
     @Override public String getServletInfo() { return "Main front-controller"; }
 
-    /* ============================================================= */
-    /* =============== 3. CART UTILITIES =========================== */
-    /* ============================================================= */
+    
     @SuppressWarnings("unchecked")
     private void handleAddToCart(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
@@ -138,7 +132,7 @@ public class MainController extends HttpServlet {
 
         int productId = Integer.parseInt(req.getParameter("productId"));
 
-        /* ---------- ★ Sửa A: lấy qty + unitPrice linh hoạt ---------- */
+      
         int qty = 1;
         String qRaw = req.getParameter("qty");
         if (qRaw == null) qRaw = req.getParameter("quantity");
@@ -152,9 +146,9 @@ public class MainController extends HttpServlet {
         } else {
             unitPrice = new ProductDAO().getProductById(productId).getPrice();
         }
-        /* ---------- ★ End Sửa A ------------------------------------ */
+      
 
-        /* thêm / cập nhật trong giỏ */
+      
         OrderItemDTO target = null;
         for (OrderItemDTO it : cart) {
             if (it.getProductId() == productId) { target = it; break; }
@@ -173,18 +167,17 @@ public class MainController extends HttpServlet {
                 + "/MainController?action=viewCart");
     }
 
-    /* ---------------- BUY-NOW ---------------- */
+  
     private void handleBuyNow(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
 
-        /* ---------- ★ Sửa B: quy trình buy-now hoàn chỉnh ---------- */
         HttpSession session = req.getSession();
 
-        /* reset giỏ */
+     
         List<OrderItemDTO> cart = new ArrayList<>();
         session.setAttribute("cart", cart);
 
-        /* lấy sản phẩm 1 món */
+      
         int productId    = Integer.parseInt(req.getParameter("productId"));
         double unitPrice = Double.parseDouble(req.getParameter("unitPrice"));
 
@@ -194,20 +187,19 @@ public class MainController extends HttpServlet {
         it.setUnitPrice(unitPrice);
         cart.add(it);
 
-        /* bắt buộc đăng nhập */
+      
         if (session.getAttribute("user") == null) {
             resp.sendRedirect(req.getContextPath()
                     + "/login.jsp?msg=Vui+lòng+đăng+nhập+để+thanh+toán");
             return;
         }
 
-        /* đã login → sang checkout */
         resp.sendRedirect(req.getContextPath()
                 + "/OrderController?action=checkout");
-        /* ---------- ★ End Sửa B ------------------------------------ */
+        
     }
 
-    /* ---------------- REMOVE ---------------- */
+    
     @SuppressWarnings("unchecked")
     private void handleRemoveCart(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
@@ -225,7 +217,7 @@ public class MainController extends HttpServlet {
                 + "/MainController?action=viewCart");
     }
 
-    /* ---------------- UPDATE ---------------- */
+   
     @SuppressWarnings("unchecked")
     private void handleUpdateCart(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {

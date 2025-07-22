@@ -10,10 +10,7 @@ import java.util.Optional;
 
 public class OrderItemDAO {
 
-    /* -----------------  C R U D  ----------------- */
-    /**
-     * Create
-     */
+   
     public boolean insert(OrderItemDTO oi) throws Exception {
         String sql = "INSERT INTO OrderItem(orderId, productId, quantity, unitPrice) "
                 + "VALUES (?,?,?,?)";
@@ -35,9 +32,6 @@ public class OrderItemDAO {
         }
     }
 
-    /**
-     * Read – by PK
-     */
     public Optional<OrderItemDTO> findById(int id) throws Exception {
         String sql = "SELECT * FROM OrderItem WHERE itemId=?";
         try ( Connection con = DbUtils.getConnection();  PreparedStatement ps = con.prepareStatement(sql)) {
@@ -50,9 +44,7 @@ public class OrderItemDAO {
         }
     }
 
-    /**
-     * Read – all
-     */
+    
     public List<OrderItemDTO> findAll() throws Exception {
         String sql = "SELECT * FROM OrderItem";
         List<OrderItemDTO> list = new ArrayList<>();
@@ -64,9 +56,7 @@ public class OrderItemDAO {
         return list;
     }
 
-    /**
-     * Update quantity & unitPrice (nếu muốn)
-     */
+   
     public boolean update(OrderItemDTO oi) throws Exception {
         String sql = "UPDATE OrderItem SET quantity=?, unitPrice=? WHERE itemId=?";
         try ( Connection con = DbUtils.getConnection();  PreparedStatement ps = con.prepareStatement(sql)) {
@@ -88,10 +78,7 @@ public class OrderItemDAO {
         }
     }
 
-    /* --------------  Helper & extra --------------- */
-    /**
-     * Lấy toàn bộ item của 1 đơn
-     */
+   
     public List<OrderItemDTO> findByOrder(int orderId) throws Exception {
         String sql = "SELECT * FROM OrderItem WHERE orderId=?";
         List<OrderItemDTO> list = new ArrayList<>();

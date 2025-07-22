@@ -122,11 +122,9 @@ public class OrderDAO {
         }
     }
 
-    /**
-     * Delete an order and its children (items + payment) if needed.
-     */
+   
     public boolean delete(int orderId) throws Exception {
-        // First delete payment record if exists
+        
         new PaymentDAO().findByOrder(orderId)
                        .ifPresent(p -> {
                            try { new PaymentDAO().delete(p.getPaymentId()); }
