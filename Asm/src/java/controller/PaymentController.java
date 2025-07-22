@@ -25,7 +25,11 @@ public class PaymentController extends HttpServlet {
       throws ServletException, IOException {
     process(req, resp);
   }
-  
+  private double parseAmount(String raw) {
+    if (raw == null) return 0;
+    String cleaned = raw.replaceAll("[^0-9.]", "");   // "28,990,000 đ" -> "28990000"
+    return cleaned.isEmpty() ? 0 : Double.parseDouble(cleaned);
+}
   private void process(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     String action = req.getParameter("action");
@@ -69,7 +73,7 @@ public class PaymentController extends HttpServlet {
    */
   private String handleProcessPayment(HttpServletRequest req, HttpServletResponse resp) throws Exception {
     int orderId   = Integer.parseInt(req.getParameter("orderId"));
-    double amount = Double.parseDouble(req.getParameter("amount"));
+ double amount = parseAmount(req.getParameter("amount"));  
     String method = req.getParameter("method");
     // nếu không truyền paidAt thì dùng ngày hôm nay
     Date paidAt = req.getParameter("paidAt") != null
