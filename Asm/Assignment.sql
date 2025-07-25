@@ -307,3 +307,9 @@ UPDATE Product SET imageUrl = 'images/Dell_S2721HN_27.jpg' WHERE productId = 19;
 
 -- Accessories
 UPDATE Product SET imageUrl = 'images/Apple_AirPods_Pro_2.jpg' WHERE productId = 20;
+
+ALTER TABLE Users
+ADD isActive BIT DEFAULT 1 NOT NULL;
+
+ALTER TABLE Review
+ADD status BIT DEFAULT 1 NOT NULL;
